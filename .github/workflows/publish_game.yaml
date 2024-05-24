@@ -60,5 +60,3 @@ jobs:
           ITCH_GAME: town-td
           ITCH_USER: sessokosga
           PACKAGE: town-td-web.zip
-
-  
