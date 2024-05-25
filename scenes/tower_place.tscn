@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://c6plucajlmoab"]
+
+[ext_resource type="Script" path="res://scripts/tower_place.gd" id="1_vl532"]
+[ext_resource type="Texture2D" uid="uid://df0hss4jlja05" path="res://assets/images/Objects/towerDefense_tile042.png" id="2_6ohd4"]
+[ext_resource type="Texture2D" uid="uid://7eflpnswon26" path="res://assets/images/Objects/towerDefense_tile045.png" id="3_gvoel"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4xpvv"]
+size = Vector2(120, 120)
+
+[node name="TowerPlace" type="Area2D"]
+priority = 2
+script = ExtResource("1_vl532")
+
+[node name="Normal" type="Sprite2D" parent="."]
+texture = ExtResource("2_6ohd4")
+
+[node name="Hover" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("3_gvoel")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_4xpvv")
