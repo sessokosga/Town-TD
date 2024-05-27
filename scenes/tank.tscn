@@ -1,0 +1,42 @@
+[gd_scene load_steps=6 format=3 uid="uid://cqyxdodtm26yr"]
+
+[ext_resource type="Texture2D" uid="uid://c1xfqvc0m51p1" path="res://assets/images/Objects/tankBody_red.png" id="1_hefq8"]
+[ext_resource type="Script" path="res://scripts/tank.gd" id="1_o8n14"]
+[ext_resource type="Texture2D" uid="uid://s7tn4jwipm7i" path="res://assets/images/Objects/tankRed_barrel2.png" id="2_j41cu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_555gt"]
+size = Vector2(42, 62)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6imrt"]
+radius = 175.27
+
+[node name="Tank" type="CharacterBody2D"]
+rotation = 1.5708
+script = ExtResource("1_o8n14")
+
+[node name="Body" type="Sprite2D" parent="."]
+scale = Vector2(0.941176, 0.941177)
+texture = ExtResource("1_hefq8")
+
+[node name="Barrel" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(-0.433853, -0.213322)
+scale = Vector2(0.875, 0.875)
+texture = ExtResource("2_j41cu")
+centered = false
+offset = Vector2(-7.11976, -51.0238)
+flip_v = true
+
+[node name="HitArea" type="CollisionShape2D" parent="."]
+unique_name_in_owner = true
+shape = SubResource("RectangleShape2D_555gt")
+
+[node name="Center" type="CollisionShape2D" parent="."]
+unique_name_in_owner = true
+visible = false
+shape = SubResource("CircleShape2D_6imrt")
+
+[node name="Range" type="CollisionShape2D" parent="."]
+unique_name_in_owner = true
+visible = false
+shape = SubResource("CircleShape2D_6imrt")

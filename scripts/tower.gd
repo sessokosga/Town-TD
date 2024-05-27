@@ -2,23 +2,21 @@ extends Area2D
 class_name Tower
 
 enum Type {
-	Barrel_One, Barrel_One_Outline,
-	Barrel_Two, Barrel_Two_Outline,
-	Barrel_Three, Barrel_Three_Outline,
-	Barrel_Four, Barrel_Four_Outline,
-	Barrel_Five, Barrel_Five_Outline,
-	Barrel_Six, Barrel_Six_Outline,
-	Barrel_Seven, Barrel_Seven_Outline
+	SingleCanon, DoubleCanon,
+	OpenSingleMissile, OpenDoubleMissile,
+	ClosedDoubleMissile
 }
 
-@onready var _range = $"%Range"
-@onready var _shape = $"%Shape"
-@onready var anim = $"%Animation"
+@onready var range :CollisionShape2D = $"%Range"
+@onready var hit_area :CollisionShape2D = $"%HitArea"
+@onready var tower = $"%Tower"
+
+var rotation_speed = 3
 
 var type:Type:
 	set(v):
 		type = v
-		if not is_instance_valid(anim):
+		if not is_instance_valid(tower):
 			return
 		init_tower()
 
@@ -27,12 +25,12 @@ var max_health:int
 
 func init_tower()->void:
 	match type:
-		Type.Barrel_One:
-			anim.play("barrel_1")
+		Type.SingleCanon:
+			tower.play("idle")
 			
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	anim.play("barrel_1")
+	tower.play("idle")
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

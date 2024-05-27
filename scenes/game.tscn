@@ -1,8 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://b1rdfptba4fe1"]
+[gd_scene load_steps=9 format=3 uid="uid://b1rdfptba4fe1"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_d5yvn"]
 [ext_resource type="PackedScene" uid="uid://b606qsocimnro" path="res://levels/BaseLevel.tscn" id="2_66l3o"]
 [ext_resource type="PackedScene" uid="uid://dtv1fsyvvbca7" path="res://ui/tower_button.tscn" id="3_clwx2"]
+[ext_resource type="Texture2D" uid="uid://bxvwh6natbs7o" path="res://assets/images/Objects/towerDefense_tile250.png" id="4_tgah8"]
+[ext_resource type="Texture2D" uid="uid://cxrx82r4qjfwk" path="res://assets/images/Objects/towerDefense_tile206.png" id="5_d5203"]
+[ext_resource type="Texture2D" uid="uid://kih4c53syojv" path="res://assets/images/Objects/towerDefense_tile205.png" id="6_d8ers"]
+[ext_resource type="Texture2D" uid="uid://bbioa7o0furq7" path="res://assets/images/Objects/towerDefense_tile204.png" id="7_4vpol"]
+[ext_resource type="PackedScene" uid="uid://c8ddhm04f056i" path="res://scenes/tower.tscn" id="8_o6akq"]
 
 [node name="Game" type="Control"]
 layout_mode = 3
@@ -15,20 +20,13 @@ script = ExtResource("1_d5yvn")
 
 [node name="BaseLevel" parent="." instance=ExtResource("2_66l3o")]
 
-[node name="Control" type="Control" parent="."]
-anchors_preset = 0
-offset_left = 550.0
-offset_top = 58.0
-offset_right = 1387.0
-offset_bottom = 195.0
-
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -750.5
-offset_right = 750.5
+offset_left = -265.5
+offset_right = 265.5
 offset_bottom = 148.0
 grow_horizontal = 2
 
@@ -41,25 +39,46 @@ theme_override_constants/separation = 20
 layout_mode = 2
 
 [node name="TowerButton2" parent="PanelContainer/TowerButtons" instance=ExtResource("3_clwx2")]
+visible = false
 layout_mode = 2
-
-[node name="TowerButton3" parent="PanelContainer/TowerButtons" instance=ExtResource("3_clwx2")]
-layout_mode = 2
-
-[node name="TowerButton4" parent="PanelContainer/TowerButtons" instance=ExtResource("3_clwx2")]
-layout_mode = 2
+texture_normal = ExtResource("4_tgah8")
+type = 1
 
 [node name="TowerButton5" parent="PanelContainer/TowerButtons" instance=ExtResource("3_clwx2")]
+visible = false
 layout_mode = 2
+texture_normal = ExtResource("7_4vpol")
+type = 4
 
-[node name="TowerButton6" parent="PanelContainer/TowerButtons" instance=ExtResource("3_clwx2")]
+[node name="TowerButton3" parent="PanelContainer/TowerButtons" instance=ExtResource("3_clwx2")]
+visible = false
 layout_mode = 2
+texture_normal = ExtResource("5_d5203")
+type = 2
 
-[node name="TowerButton7" parent="PanelContainer/TowerButtons" instance=ExtResource("3_clwx2")]
+[node name="TowerButton4" parent="PanelContainer/TowerButtons" instance=ExtResource("3_clwx2")]
+visible = false
 layout_mode = 2
+texture_normal = ExtResource("6_d8ers")
+type = 3
 
 [node name="TowerParents" type="Control" parent="."]
 unique_name_in_owner = true
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+
+[node name="Tower" parent="TowerParents" instance=ExtResource("8_o6akq")]
+position = Vector2(428, 53)
+
+[node name="Tower3" parent="TowerParents" instance=ExtResource("8_o6akq")]
+position = Vector2(703, 784)
+
+[node name="Tower4" parent="TowerParents" instance=ExtResource("8_o6akq")]
+position = Vector2(1017, 832)
+
+[node name="Tower5" parent="TowerParents" instance=ExtResource("8_o6akq")]
+position = Vector2(1343, 550)
+
+[node name="Tower6" parent="TowerParents" instance=ExtResource("8_o6akq")]
+position = Vector2(1761, 820)

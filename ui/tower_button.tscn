@@ -1,15 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://dtv1fsyvvbca7"]
+[gd_scene load_steps=3 format=3 uid="uid://dtv1fsyvvbca7"]
 
-[ext_resource type="Texture2D" uid="uid://d35w3srs0xqgg" path="res://assets/images/Objects/specialBarrel1.png" id="2_dk2vn"]
+[ext_resource type="Texture2D" uid="uid://t75iqol51gf7" path="res://assets/images/Objects/towerDefense_tile249.png" id="1_70eod"]
 [ext_resource type="Script" path="res://ui/tower_button.gd" id="2_e0c46"]
-[ext_resource type="Texture2D" uid="uid://bxhcjxu8cpo1q" path="res://assets/images/Objects/specialBarrel1 pressed.png" id="3_4ffl7"]
 
 [node name="TowerButton" type="TextureButton"]
-offset_right = 28.0
-offset_bottom = 44.0
+custom_minimum_size = Vector2(80, 80)
 toggle_mode = true
-texture_normal = ExtResource("2_dk2vn")
-texture_pressed = ExtResource("3_4ffl7")
+texture_normal = ExtResource("1_70eod")
+ignore_texture_size = true
+stretch_mode = 5
 script = ExtResource("2_e0c46")
 
 [connection signal="toggled" from="." to="." method="_on_toggled"]

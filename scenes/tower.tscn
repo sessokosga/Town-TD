@@ -1,160 +1,61 @@
-[gd_scene load_steps=19 format=3 uid="uid://c8ddhm04f056i"]
+[gd_scene load_steps=8 format=3 uid="uid://c8ddhm04f056i"]
 
 [ext_resource type="Script" path="res://scripts/tower.gd" id="1_esp4h"]
-[ext_resource type="Texture2D" uid="uid://d35w3srs0xqgg" path="res://assets/images/Objects/specialBarrel1.png" id="1_qmvxu"]
-[ext_resource type="Texture2D" uid="uid://mclwrscsbdcl" path="res://assets/images/Objects/specialBarrel1_outline.png" id="2_cq1q1"]
-[ext_resource type="Texture2D" uid="uid://dmrkmn0flwwlb" path="res://assets/images/Objects/specialBarrel2.png" id="3_oxgur"]
-[ext_resource type="Texture2D" uid="uid://cpgom0o88mr2c" path="res://assets/images/Objects/specialBarrel2_outline.png" id="4_lumum"]
-[ext_resource type="Texture2D" uid="uid://ddxfgpmkeugwq" path="res://assets/images/Objects/specialBarrel3.png" id="5_tqqx0"]
-[ext_resource type="Texture2D" uid="uid://c54ujlhj3b7wo" path="res://assets/images/Objects/specialBarrel3_outline.png" id="6_h3ibb"]
-[ext_resource type="Texture2D" uid="uid://dtb2521hgolj2" path="res://assets/images/Objects/specialBarrel4.png" id="7_nkbli"]
-[ext_resource type="Texture2D" uid="uid://d1kr6nehu6cgv" path="res://assets/images/Objects/specialBarrel4_outline.png" id="8_7wnd5"]
-[ext_resource type="Texture2D" uid="uid://bfdx1ebjm40hl" path="res://assets/images/Objects/specialBarrel5.png" id="9_edhxh"]
-[ext_resource type="Texture2D" uid="uid://bmuyd1tvvbhvo" path="res://assets/images/Objects/specialBarrel5_outline.png" id="10_w3ug2"]
-[ext_resource type="Texture2D" uid="uid://ldckgjc0ilmk" path="res://assets/images/Objects/specialBarrel6.png" id="11_1el3r"]
-[ext_resource type="Texture2D" uid="uid://blr58xghnuhkv" path="res://assets/images/Objects/specialBarrel6_outline.png" id="12_453ix"]
-[ext_resource type="Texture2D" uid="uid://cjeyc2qwvvks4" path="res://assets/images/Objects/specialBarrel7.png" id="13_j6mvg"]
-[ext_resource type="Texture2D" uid="uid://dk26w14ignxe1" path="res://assets/images/Objects/specialBarrel7_outline.png" id="14_s3t1x"]
+[ext_resource type="Texture2D" uid="uid://c2q0qktwvrq0x" path="res://assets/images/Objects/towerDefense_tile183.png" id="2_wnqr4"]
+[ext_resource type="Texture2D" uid="uid://t75iqol51gf7" path="res://assets/images/Objects/towerDefense_tile249.png" id="3_oyh0a"]
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_ph1yt"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_g0tq5"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_qmvxu")
-}],
-"loop": false,
-"name": &"barrel_1",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("2_cq1q1")
-}],
-"loop": false,
-"name": &"barrel_1_outline",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("3_oxgur")
-}],
-"loop": false,
-"name": &"barrel_2",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("4_lumum")
-}],
-"loop": false,
-"name": &"barrel_2_outline",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("5_tqqx0")
-}],
-"loop": false,
-"name": &"barrel_3",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("6_h3ibb")
-}],
-"loop": false,
-"name": &"barrel_3_outline",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("7_nkbli")
-}],
-"loop": false,
-"name": &"barrel_4",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("8_7wnd5")
-}],
-"loop": false,
-"name": &"barrel_4_outline",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("9_edhxh")
-}],
-"loop": false,
-"name": &"barrel_5",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("10_w3ug2")
+"texture": ExtResource("2_wnqr4")
 }],
 "loop": true,
-"name": &"barrel_5_outline",
+"name": &"default",
 "speed": 5.0
-}, {
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jwfmq"]
+animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("11_1el3r")
+"texture": ExtResource("3_oyh0a")
 }],
 "loop": true,
-"name": &"barrel_6",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("12_453ix")
-}],
-"loop": true,
-"name": &"barrel_6_outline",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("13_j6mvg")
-}],
-"loop": true,
-"name": &"barrel_7",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("14_s3t1x")
-}],
-"loop": true,
-"name": &"barrel_7_outline",
+"name": &"idle",
 "speed": 5.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_h7svu"]
 resource_local_to_scene = true
-radius = 12.0
+radius = 22.2036
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_wrxdh"]
 resource_local_to_scene = true
-radius = 51.0392
+radius = 170.0
 
 [node name="Tower" type="Area2D"]
 script = ExtResource("1_esp4h")
 
-[node name="Animation" type="AnimatedSprite2D" parent="."]
+[node name="Base" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
-sprite_frames = SubResource("SpriteFrames_ph1yt")
-animation = &"barrel_5_outline"
-autoplay = "barrel_1"
+position = Vector2(0, 18)
+sprite_frames = SubResource("SpriteFrames_g0tq5")
 
-[node name="shape" type="CollisionShape2D" parent="."]
+[node name="Tower" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(0, -9)
+position = Vector2(-1, 17)
+scale = Vector2(0.6875, 0.6875)
+sprite_frames = SubResource("SpriteFrames_jwfmq")
+animation = &"idle"
+offset = Vector2(1.45455, -24.7273)
+
+[node name="HitArea" type="CollisionShape2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, 14)
 shape = SubResource("CircleShape2D_h7svu")
 
-[node name="Area2D" type="Area2D" parent="."]
-
-[node name="Range" type="CollisionShape2D" parent="Area2D"]
+[node name="Range" type="CollisionShape2D" parent="."]
 unique_name_in_owner = true
+visible = false
 shape = SubResource("CircleShape2D_wrxdh")
