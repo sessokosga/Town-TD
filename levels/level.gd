@@ -1,7 +1,7 @@
 extends Control
 class_name Level
 
-signal deploy_tower(type,position)
+signal deploy_tower(place)
 
 
 @onready var tower_places : Control = $"%TowerPlaces"
@@ -14,22 +14,17 @@ signal deploy_tower(type,position)
 
 var tank_node = preload("res://scenes/tank.tscn")
 
-var spawn_time = 1
+var spawn_time = 2
 var time:float = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	for tp:TowerPlace in tower_places.get_children():
 		tp.add_tower.connect(
-			func (type,position):
-				deploy_tower.emit(type,position)
+			func ():
+				deploy_tower.emit(tp)
 		)
-		
-	for i in range(path.get_child_count()-1):
-		var mk = path.get_child(i)
-		var mk2 = path.get_child(i+1)
-		#if mk2.position
-		
+
 func _on_tank_reached_target(tank:Tank)->void:
 	tank.position = tank.target
 	tank.target = _get_next_target(tank.target)
@@ -52,6 +47,7 @@ func _get_next_target(tg:Vector2)->Vector2:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	#time -= delta
 	if time <= 0:
 		spawn_tank()
 		time = spawn_time

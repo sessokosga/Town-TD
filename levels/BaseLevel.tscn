@@ -53,6 +53,7 @@ tile_size = Vector2i(128, 128)
 sources/0 = SubResource("TileSetAtlasSource_shl36")
 
 [node name="BaseLevel" type="Control"]
+z_index = -2
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_hnq4t")
@@ -112,7 +113,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="Marker2D" type="Marker2D" parent="Path"]
-position = Vector2(31, 192)
+position = Vector2(359, 183)
 
 [node name="Marker2D2" type="Marker2D" parent="Path"]
 position = Vector2(514, 191)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://b1rdfptba4fe1"]
+[gd_scene load_steps=8 format=3 uid="uid://b1rdfptba4fe1"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_d5yvn"]
 [ext_resource type="PackedScene" uid="uid://b606qsocimnro" path="res://levels/BaseLevel.tscn" id="2_66l3o"]
@@ -7,7 +7,6 @@
 [ext_resource type="Texture2D" uid="uid://cxrx82r4qjfwk" path="res://assets/images/Objects/towerDefense_tile206.png" id="5_d5203"]
 [ext_resource type="Texture2D" uid="uid://kih4c53syojv" path="res://assets/images/Objects/towerDefense_tile205.png" id="6_d8ers"]
 [ext_resource type="Texture2D" uid="uid://bbioa7o0furq7" path="res://assets/images/Objects/towerDefense_tile204.png" id="7_4vpol"]
-[ext_resource type="PackedScene" uid="uid://c8ddhm04f056i" path="res://scenes/tower.tscn" id="8_o6akq"]
 
 [node name="Game" type="Control"]
 layout_mode = 3
@@ -67,18 +66,3 @@ unique_name_in_owner = true
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
-
-[node name="Tower" parent="TowerParents" instance=ExtResource("8_o6akq")]
-position = Vector2(428, 53)
-
-[node name="Tower3" parent="TowerParents" instance=ExtResource("8_o6akq")]
-position = Vector2(703, 784)
-
-[node name="Tower4" parent="TowerParents" instance=ExtResource("8_o6akq")]
-position = Vector2(1017, 832)
-
-[node name="Tower5" parent="TowerParents" instance=ExtResource("8_o6akq")]
-position = Vector2(1343, 550)
-
-[node name="Tower6" parent="TowerParents" instance=ExtResource("8_o6akq")]
-position = Vector2(1761, 820)

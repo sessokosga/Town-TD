@@ -1,11 +1,11 @@
 extends Area2D
 class_name TowerPlace
 
-signal add_tower(type,pos)
+signal add_tower()
 
 @onready var normal = $Normal
 @onready var hover = $Hover
-@onready var collision :CollisionShape2D = $CollisionShape2D
+@onready var box :CollisionShape2D = $"%Box"
 
 var is_occupied = false
 @export var type : Tower.Type
@@ -22,12 +22,12 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	# Click 
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and not is_occupied:
-		if collision.shape.get_rect().has_point(get_local_mouse_position()) and visible:
+		if box.shape.get_rect().has_point(get_local_mouse_position()) and visible:
 			is_occupied = true
-			add_tower.emit(type,position)
+			add_tower.emit()
 	
 	# Hover 
-	if collision.shape.get_rect().has_point(get_local_mouse_position()) and visible:
+	if box.shape.get_rect().has_point(get_local_mouse_position()) and visible:
 		if hover.hidden:
 			normal.hide()
 			hover.show()
