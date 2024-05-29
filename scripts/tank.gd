@@ -4,6 +4,8 @@ class_name Tank
 enum Status {Alive, Dead}
 
 signal arrived(tank)
+signal dead(tank)
+signal out_of_screen(tank)
 
 @onready var center :CollisionShape2D = $"%Center"
 @onready var hit_area :CollisionShape2D = $"%HitArea"
@@ -16,14 +18,20 @@ signal arrived(tank)
 
 var bullet_node 
 
-const SPEED = 100.0
 const JUMP_VELOCITY = -400.0
 const OUT_OF_BOUNDS = Vector2(-10000,-10000)
 
-var target : Vector2
+var speed = 300.0
 var direction = Vector2.ZERO
 var roation_speed = 3
 var barrel_rotation_speed = 10
+var target : Vector2 = OUT_OF_BOUNDS :
+	set(v):
+		target = v
+		if target == OUT_OF_BOUNDS:
+			out_of_screen.emit(self)
+			queue_free()
+			
 var health :int:
 	set(v):
 		health = v
@@ -42,7 +50,7 @@ var timer_shoot :float =0.5
 var status:Status
 
 func _ready() -> void:
-	target = OUT_OF_BOUNDS
+
 	health = 10
 	bullet_node = load("res://scenes/bullet.tscn")
 	status = Status.Alive
@@ -82,15 +90,15 @@ func _physics_process(delta: float) -> void:
 			arrived.emit(self)
 	
 		if direction.x:
-			velocity.x = direction.x * SPEED
+			velocity.x = direction.x * speed
 		else:
-			velocity.x = move_toward(velocity.x, 0, SPEED)
+			velocity.x = move_toward(velocity.x, 0, speed)
 		if direction.y:
-			velocity.y = direction.y * SPEED
+			velocity.y = direction.y * speed
 		else:
-			velocity.y = move_toward(velocity.y, 0, SPEED)
+			velocity.y = move_toward(velocity.y, 0, speed)
 
-	#position += velocity * delta
+	position += velocity * delta
 
 func _process(delta: float) -> void:
 	# Get an enemy to shoot at
@@ -112,6 +120,7 @@ func take_damage(damage:float)->void:
 
 func _on_animation_sprite_animation_finished() -> void:
 	if animation_sprite.animation == "explosion":
+		dead.emit(self)
 		hide()
 		queue_free()
 		

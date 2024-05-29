@@ -85,7 +85,7 @@ func _process(delta: float) -> void:
 			# Shoot at tank
 			if timer_shoot <= 0:
 				timer_shoot = shoot_timer
-				#shoot(direction)
+				shoot(direction)
 		#else:
 			#var angle_to = 0
 			#tower.rotate(signf(angle_to) * -1 * min(delta * rotation_speed, abs(angle_to)))
@@ -105,7 +105,7 @@ func _on_body_exited(body: Node2D) -> void:
 			
 
 func take_damage(damage:float)->void:
-	#health -= damage
+	health -= damage
 	pass
 	
 

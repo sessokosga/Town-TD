@@ -59,7 +59,7 @@ anchors_preset = 0
 script = ExtResource("1_hnq4t")
 
 [node name="TileMap" type="TileMap" parent="."]
-position = Vector2(0, -1)
+position = Vector2(0, 63)
 tile_set = SubResource("TileSet_vhig0")
 format = 2
 layer_0/tile_data = PackedInt32Array(262147, 0, 0, 262144, 0, 0, 327680, 0, 0, 393216, 0, 0, 458752, 0, 0, 524288, 0, 0, 262145, 0, 0, 327681, 0, 0, 393217, 0, 0, 458753, 0, 0, 524289, 0, 0, 262146, 0, 0, 327682, 0, 0, 393218, 0, 0, 458754, 0, 0, 524290, 0, 0, 327683, 0, 0, 393219, 0, 0, 458755, 0, 0, 524291, 0, 0, 262148, 196608, 1610612737, 327684, 0, 0, 393220, 0, 0, 458756, 0, 0, 524292, 0, 0, 262149, 131072, 0, 327685, 0, 0, 393221, 0, 0, 458757, 0, 0, 524293, 0, 0, 262150, 262144, 1, 327686, 65536, 0, 393222, 65536, 0, 458758, 327680, 1, 524294, 0, 0, 262151, 0, 0, 327687, 0, 0, 393223, 0, 0, 458759, 131072, 0, 524295, 0, 0, 262152, 0, 0, 327688, 0, 0, 393224, 0, 0, 458760, 131072, 0, 524296, 0, 0, 327689, 65536, 0, 393225, 65536, 0, 458761, 393216, 1, 524297, 0, 0, 327690, 0, 0, 393226, 0, 0, 458762, 0, 0, 524298, 0, 0, 327691, 0, 0, 393227, 0, 0, 458763, 0, 0, 524299, 0, 0, 327692, 65536, 0, 393228, 65536, 0, 458764, 327680, 1, 524300, 0, 0, 262157, 0, 0, 327693, 0, 0, 393229, 0, 0, 458765, 131072, 0, 524301, 0, 0, 262158, 0, 0, 327694, 0, 0, 393230, 0, 0, 458766, 131072, 0, 524302, 0, 0, 0, 0, 0, 65536, 131072, 0, 1, 0, 0, 65537, 131072, 0, 2, 0, 0, 65538, 131072, 0, 3, 0, 0, 65539, 131072, 0, 4, 0, 0, 65540, 262144, 1, 5, 0, 0, 65541, 0, 0, 6, 0, 0, 65542, 0, 0, 7, 0, 0, 65543, 0, 0, 8, 0, 0, 65544, 0, 0, 9, 0, 0, 65545, 196608, 1, 10, 0, 0, 65546, 131072, 0, 11, 0, 0, 65547, 131072, 0, 12, 0, 0, 65548, 262144, 1, 13, 0, 0, 65549, 0, 0, 14, 0, 0, 65550, 0, 0, -131072, 0, 0, -65536, 0, 0, -131071, 0, 0, -65535, 0, 0, -131070, 0, 0, -65534, 0, 0, -131069, 0, 0, -65533, 0, 0, -131068, 0, 0, -65532, 0, 0, -131067, 0, 0, -65531, 0, 0, -131066, 0, 0, -65530, 0, 0, -131065, 0, 0, -65529, 0, 0, -131064, 0, 0, -65528, 0, 0, -131063, 0, 0, -65527, 0, 0, -131062, 0, 0, -65526, 0, 0, -131061, 0, 0, -65525, 0, 0, -131060, 0, 0, -65524, 0, 0, -131059, 0, 0, -65523, 0, 0, -131058, 0, 0, -65522, 0, 0, 131076, 65536, 0, 196612, 65536, 0, 131072, 0, 0, 196608, 0, 0, 131073, 0, 0, 196609, 0, 0, 131074, 0, 0, 196610, 0, 0, 131075, 0, 0, 196611, 0, 0, 131077, 0, 0, 196613, 0, 0, 131078, 0, 0, 196614, 0, 0, 131079, 0, 0, 196615, 0, 0, 131080, 0, 0, 196616, 0, 0, 131081, 65536, 0, 131082, 0, 0, 131083, 0, 0, 131084, 65536, 0, 131085, 0, 0, 196621, 0, 0, 131086, 0, 0, 196622, 0, 0, 262156, 65536, 0, 196620, 65536, 0, 196617, 65536, 0, 262153, 65536, 0, 196618, 0, 0, 262154, 0, 0, 262155, 0, 0, 196619, 0, 0)
@@ -71,34 +71,34 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="TowerBase" parent="TowerPlaces" instance=ExtResource("2_dus0t")]
-position = Vector2(143, 329)
+position = Vector2(156, 408)
 
 [node name="TowerBase2" parent="TowerPlaces" instance=ExtResource("2_dus0t")]
-position = Vector2(410, 329)
+position = Vector2(423, 408)
 
 [node name="TowerBase3" parent="TowerPlaces" instance=ExtResource("2_dus0t")]
-position = Vector2(425, 76)
+position = Vector2(428, 133)
 
 [node name="TowerBase4" parent="TowerPlaces" instance=ExtResource("2_dus0t")]
-position = Vector2(158, 76)
+position = Vector2(161, 133)
 
 [node name="TowerBase5" parent="TowerPlaces" instance=ExtResource("2_dus0t")]
-position = Vector2(696, 806)
+position = Vector2(699, 897)
 
 [node name="TowerBase6" parent="TowerPlaces" instance=ExtResource("2_dus0t")]
-position = Vector2(1018, 840)
+position = Vector2(1021, 907)
 
 [node name="TowerBase7" parent="TowerPlaces" instance=ExtResource("2_dus0t")]
-position = Vector2(1346, 823)
+position = Vector2(1349, 914)
 
 [node name="TowerBase8" parent="TowerPlaces" instance=ExtResource("2_dus0t")]
-position = Vector2(1758, 833)
+position = Vector2(1761, 906)
 
 [node name="TowerBase9" parent="TowerPlaces" instance=ExtResource("2_dus0t")]
-position = Vector2(1346, 569)
+position = Vector2(1349, 660)
 
 [node name="TowerBase10" parent="TowerPlaces" instance=ExtResource("2_dus0t")]
-position = Vector2(1339, 344)
+position = Vector2(1342, 435)
 
 [node name="TanksParent" type="Control" parent="."]
 unique_name_in_owner = true
@@ -113,55 +113,71 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="Marker2D" type="Marker2D" parent="Path"]
-position = Vector2(359, 183)
+position = Vector2(-73, 249)
 
 [node name="Marker2D2" type="Marker2D" parent="Path"]
-position = Vector2(514, 191)
+position = Vector2(509, 251)
 
 [node name="Marker2D11" type="Marker2D" parent="Path"]
-position = Vector2(579, 244)
+position = Vector2(574, 304)
 
 [node name="Marker2D3" type="Marker2D" parent="Path"]
-position = Vector2(577, 518)
+position = Vector2(572, 578)
 
 [node name="Marker2D12" type="Marker2D" parent="Path"]
-position = Vector2(641, 577)
+position = Vector2(636, 637)
 
 [node name="Marker2D4" type="Marker2D" parent="Path"]
-position = Vector2(782, 576)
+position = Vector2(777, 636)
 
 [node name="Marker2D13" type="Marker2D" parent="Path"]
-position = Vector2(836, 637)
+position = Vector2(831, 697)
 
 [node name="Marker2D5" type="Marker2D" parent="Path"]
-position = Vector2(833, 912)
+position = Vector2(828, 972)
 
 [node name="Marker2D14" type="Marker2D" parent="Path"]
-position = Vector2(885, 960)
+position = Vector2(880, 1020)
 
 [node name="Marker2D6" type="Marker2D" parent="Path"]
-position = Vector2(1156, 961)
+position = Vector2(1151, 1021)
 
 [node name="Marker2D15" type="Marker2D" parent="Path"]
-position = Vector2(1214, 908)
+position = Vector2(1209, 968)
 
 [node name="Marker2D7" type="Marker2D" parent="Path"]
-position = Vector2(1215, 262)
+position = Vector2(1210, 322)
 
 [node name="Marker2D16" type="Marker2D" parent="Path"]
-position = Vector2(1265, 194)
+position = Vector2(1260, 254)
 
 [node name="Marker2D8" type="Marker2D" parent="Path"]
-position = Vector2(1550, 191)
+position = Vector2(1545, 251)
 
 [node name="Marker2D17" type="Marker2D" parent="Path"]
-position = Vector2(1602, 247)
+position = Vector2(1597, 307)
 
 [node name="Marker2D9" type="Marker2D" parent="Path"]
-position = Vector2(1607, 905)
+position = Vector2(1602, 965)
 
 [node name="Marker2D18" type="Marker2D" parent="Path"]
-position = Vector2(1668, 961)
+position = Vector2(1663, 1021)
 
 [node name="Marker2D10" type="Marker2D" parent="Path"]
-position = Vector2(2057, 962)
+position = Vector2(2052, 1022)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer"]
+offset_left = 1665.0
+offset_top = 24.0
+offset_right = 1857.0
+offset_bottom = 111.0
+
+[node name="Wave" type="Label" parent="CanvasLayer/PanelContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"HeaderLarge"
+text = "Wave 1 / 4"
+horizontal_alignment = 1
+vertical_alignment = 1

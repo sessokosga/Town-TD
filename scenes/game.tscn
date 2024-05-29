@@ -36,33 +36,212 @@ theme_override_constants/separation = 20
 
 [node name="TowerButton" parent="PanelContainer/TowerButtons" instance=ExtResource("3_clwx2")]
 layout_mode = 2
+cost = 150
 
 [node name="TowerButton2" parent="PanelContainer/TowerButtons" instance=ExtResource("3_clwx2")]
-visible = false
 layout_mode = 2
 texture_normal = ExtResource("4_tgah8")
 type = 1
+cost = 200
 
 [node name="TowerButton5" parent="PanelContainer/TowerButtons" instance=ExtResource("3_clwx2")]
-visible = false
 layout_mode = 2
 texture_normal = ExtResource("7_4vpol")
 type = 4
+cost = 250
 
 [node name="TowerButton3" parent="PanelContainer/TowerButtons" instance=ExtResource("3_clwx2")]
-visible = false
 layout_mode = 2
 texture_normal = ExtResource("5_d5203")
 type = 2
+cost = 300
 
 [node name="TowerButton4" parent="PanelContainer/TowerButtons" instance=ExtResource("3_clwx2")]
-visible = false
 layout_mode = 2
 texture_normal = ExtResource("6_d8ers")
 type = 3
+cost = 350
 
 [node name="TowerParents" type="Control" parent="."]
 unique_name_in_owner = true
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="Heath" type="PanelContainer" parent="CanvasLayer"]
+offset_left = 1320.0
+offset_top = 26.0
+offset_right = 1527.0
+offset_bottom = 113.0
+
+[node name="Health" type="Label" parent="CanvasLayer/Heath"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"HeaderLarge"
+text = "Health : 20
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Money" type="PanelContainer" parent="CanvasLayer"]
+offset_left = 361.0
+offset_top = 38.0
+offset_right = 610.0
+offset_bottom = 125.0
+
+[node name="Money" type="Label" parent="CanvasLayer/Money"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"HeaderLarge"
+text = "Money : 40 000"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Failure" type="Control" parent="CanvasLayer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Failure"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.647059)
+
+[node name="Control" type="PanelContainer" parent="CanvasLayer/Failure"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -470.5
+offset_top = -272.5
+offset_right = 470.5
+offset_bottom = 272.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Failure/Control"]
+layout_mode = 2
+
+[node name="Space" type="Control" parent="CanvasLayer/Failure/Control/VBoxContainer"]
+custom_minimum_size = Vector2(400, 50)
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Title" type="Label" parent="CanvasLayer/Failure/Control/VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"HeaderLarge"
+theme_override_font_sizes/font_size = 70
+text = "You Failed"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="Space2" type="Control" parent="CanvasLayer/Failure/Control/VBoxContainer"]
+custom_minimum_size = Vector2(400, 150)
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Control" type="Control" parent="CanvasLayer/Failure/Control/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Failure/Control/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 50
+alignment = 1
+
+[node name="Button" type="Button" parent="CanvasLayer/Failure/Control/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+text = "Restart"
+
+[node name="Button2" type="Button" parent="CanvasLayer/Failure/Control/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+text = "Home"
+
+[node name="Victory" type="Control" parent="CanvasLayer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Victory"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.647059)
+
+[node name="Control" type="PanelContainer" parent="CanvasLayer/Victory"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -470.5
+offset_top = -272.5
+offset_right = 470.5
+offset_bottom = 272.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Victory/Control"]
+layout_mode = 2
+
+[node name="Space" type="Control" parent="CanvasLayer/Victory/Control/VBoxContainer"]
+custom_minimum_size = Vector2(400, 50)
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Title" type="Label" parent="CanvasLayer/Victory/Control/VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"HeaderLarge"
+theme_override_font_sizes/font_size = 70
+text = "Victory"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="Space2" type="Control" parent="CanvasLayer/Victory/Control/VBoxContainer"]
+custom_minimum_size = Vector2(400, 150)
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Control" type="Control" parent="CanvasLayer/Victory/Control/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Victory/Control/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 50
+alignment = 1
+
+[node name="Button" type="Button" parent="CanvasLayer/Victory/Control/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+text = "Restart"
+
+[node name="Button2" type="Button" parent="CanvasLayer/Victory/Control/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+text = "Home"
