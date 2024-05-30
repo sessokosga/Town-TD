@@ -1,19 +1,24 @@
 extends Control
 class_name Game
 
-enum Status {Failure,Playing, Victory}
+enum Status {Failure, Playing, Reward, Victory}
 
 @onready var tower_buttons = $"%TowerButtons"
-@onready var tower_parents = $"%TowerParents"
+@onready var towers_parent = $"%TowerParents"
+@onready var rewards_parent : Control = $"%RewardsParent"
 @onready var level : Level = $BaseLevel
 @onready var lab_status : Label = $"%Status"
 @onready var lab_health : Label = $"%Health"
 @onready var lab_money : Label = $"%Money"
 @onready var ctl_victory : Control = $"%Victory"
 @onready var ctl_failure : Control = $"%Failure"
+@onready var ctl_reward : Control = $"%Reward"
+@onready var btn_select_reward : Button = $"%SelectReward"
+
 
 var tower_node = preload("res://scenes/tower.tscn")
 var tower_cost = 0
+var selected_reward : Reward = null
 var status : Status:
 	set(v):
 		status = v
@@ -21,11 +26,19 @@ var status : Status:
 			return
 		ctl_failure.hide()
 		ctl_victory.hide()
+		ctl_reward.hide()
+		pause_status(true)
 		match status:
 			Status.Victory:
 				ctl_victory.show()
 			Status.Failure:
 				ctl_failure.show()
+			Status.Reward:
+				ctl_reward.show()
+			Status.Playing:
+				pause_status(false)
+			
+				
 
 var money : int :
 	set(v):
@@ -57,6 +70,24 @@ func _ready() -> void:
 	level.deploy_tower.connect(_on_deploy_tower)
 	level.tank_got_a_way.connect(_on_tank_got_a_way)
 	level.waves_completed.connect(_on_waves_completed)
+	level.raise_reward.connect(_on_raise_reward)
+	level.tank_destroyed.connect(_on_tank_destroyed)
+	
+	for rwd : Reward in rewards_parent.get_children():
+		rwd.active.connect(_on_reward_active)
+	
+func _on_tank_destroyed(tank:Tank)->void:
+	money += 50
+	
+func _on_raise_reward()->void:
+	status = Status.Reward
+	
+func _on_reward_active(rwd:Reward)->void:
+	btn_select_reward.disabled = false
+	selected_reward = rwd
+	for rw : Reward in rewards_parent.get_children():
+		if rwd != rw:
+			rw.selected = false
 	
 func _on_waves_completed()->void:
 	if health > 0:
@@ -67,7 +98,7 @@ func _on_tank_got_a_way()->void:
 
 func _on_deploy_tower(place:TowerPlace)->void:
 	var tower :Tower = tower_node.instantiate()
-	tower_parents.add_child(tower)
+	towers_parent.add_child(tower)
 	tower.type = place.type
 	tower.position = place.position
 	tower.occupied_place = place
@@ -91,6 +122,15 @@ func _tower_button_toggled(tb:TowerButton)->void:
 		if reset:
 			reset_tower_buttons()
 			level.toggle_tower_places_visibility(false)
+			
+func pause_status(sta)->void:
+	for tower:Tower in towers_parent.get_children():
+		tower.paused = sta
+		
+	level.paused = sta
+	
+	for tank:Tank in level.tank_parents.get_children():
+		tank.paused = sta
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -121,7 +161,7 @@ func _process(delta: float) -> void:
 			var rect :Rect2 = tank._range.shape.get_rect()
 			rect.position += tank.global_position
 			var found = false
-			for tower:Tower in tower_parents.get_children():
+			for tower:Tower in towers_parent.get_children():
 				if tower.status == Tower.Status.Dead:
 					break
 				var target = tower.hit_area.position+tower.global_position #- Vector2(0,50)
@@ -142,7 +182,7 @@ func _process(delta: float) -> void:
 						bullet.destroy()
 						
 			elif bullet.sender == Bullet.Sender.Tank:
-				for tower:Tower in tower_parents.get_children():
+				for tower:Tower in towers_parent.get_children():
 					var rect = tower.hit_area.shape.get_rect()
 					rect.position += tower.global_position
 					if rect.has_point(bullet.global_position):
@@ -164,3 +204,18 @@ func check_tower_purchase_availabity()->void:
 
 func _on_tower_button_toggled(toggled_on: bool) -> void:
 	$BaseLevel.toggle_tower_places_visibility(toggled_on)
+
+func _apply_reward()->void:
+	selected_reward.hide()
+	match selected_reward.effect:
+		Reward.Effect.AddTwoTowerPlace:
+			level.add_tower_places(2) 
+		Reward.Effect.AddTwoHealthPoints:
+			health += 2
+		Reward.Effect.AddThousandCoins:
+			money += 1000
+		
+
+func _on_select_reward_pressed() -> void:
+	status = Status.Playing
+	_apply_reward()

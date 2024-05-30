@@ -1,7 +1,10 @@
-[gd_resource type="Theme" load_steps=2 format=3 uid="uid://pd1l022f3n6k"]
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://pd1l022f3n6k"]
 
 [ext_resource type="StyleBox" uid="uid://uupe2umj2u1w" path="res://theme/panel/panel_000.tres" id="1_eakkf"]
+[ext_resource type="StyleBox" uid="uid://d2gqw75epioq8" path="res://theme/panel/panel_outline_001.tres" id="2_lwduw"]
 
 [resource]
 Panel/styles/panel = ExtResource("1_eakkf")
 PanelContainer/styles/panel = ExtResource("1_eakkf")
+RewardPanel/base_type = &"PanelContainer"
+RewardPanel/styles/panel = ExtResource("2_lwduw")

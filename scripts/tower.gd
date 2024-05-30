@@ -24,7 +24,8 @@ var target :Tank = null
 var shoot_timer = 1
 var timer_shoot :float =0.5
 var status:Status
-@export var occupied_place :TowerPlace
+var paused = false
+var occupied_place :TowerPlace
 
 var type:Type:
 	set(v):
@@ -69,7 +70,7 @@ func shoot(direction:Vector2)->void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if status == Status.Dead:
+	if status == Status.Dead or paused:
 		return
 	if is_instance_valid(target) :
 		timer_shoot -= delta

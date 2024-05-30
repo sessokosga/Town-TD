@@ -17,6 +17,7 @@ signal out_of_screen(tank)
 @onready var animation_sprite :AnimatedSprite2D = $"%AnimationSprite"
 
 var bullet_node 
+var paused = false
 
 const JUMP_VELOCITY = -400.0
 const OUT_OF_BOUNDS = Vector2(-10000,-10000)
@@ -64,7 +65,7 @@ func shoot(direction:Vector2)->void:
 	bullet.sender = Bullet.Sender.Tank
 
 func _physics_process(delta: float) -> void:
-	if status == Status.Dead:
+	if status == Status.Dead or paused:
 		return
 	# Shoot at towers
 	if is_instance_valid(enemy):
@@ -101,6 +102,8 @@ func _physics_process(delta: float) -> void:
 	position += velocity * delta
 
 func _process(delta: float) -> void:
+	if status == Status.Dead or paused:
+		return
 	# Get an enemy to shoot at
 	var rect = _range.shape.get_rect()
 	rect.position += global_position

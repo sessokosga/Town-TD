@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://b606qsocimnro"]
+[gd_scene load_steps=7 format=3 uid="uid://b606qsocimnro"]
 
 [ext_resource type="Script" path="res://levels/level.gd" id="1_hnq4t"]
 [ext_resource type="Texture2D" uid="uid://dfl31yioat1ul" path="res://assets/images/terrainTiles_retina.png" id="1_rqonk"]
@@ -51,6 +51,9 @@ texture_region_size = Vector2i(128, 128)
 [sub_resource type="TileSet" id="TileSet_vhig0"]
 tile_size = Vector2i(128, 128)
 sources/0 = SubResource("TileSetAtlasSource_shl36")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vie7o"]
+bg_color = Color(0.611765, 0.878431, 0.721569, 1)
 
 [node name="BaseLevel" type="Control"]
 z_index = -2
@@ -257,6 +260,13 @@ offset_left = 1665.0
 offset_top = 24.0
 offset_right = 1857.0
 offset_bottom = 111.0
+
+[node name="Progress" type="ProgressBar" parent="CanvasLayer/PanelContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_styles/fill = SubResource("StyleBoxFlat_vie7o")
+show_percentage = false
 
 [node name="Wave" type="Label" parent="CanvasLayer/PanelContainer"]
 unique_name_in_owner = true

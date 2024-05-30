@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://b1rdfptba4fe1"]
+[gd_scene load_steps=11 format=3 uid="uid://b1rdfptba4fe1"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_d5yvn"]
 [ext_resource type="PackedScene" uid="uid://b606qsocimnro" path="res://levels/BaseLevel.tscn" id="2_66l3o"]
@@ -7,6 +7,9 @@
 [ext_resource type="Texture2D" uid="uid://cxrx82r4qjfwk" path="res://assets/images/Objects/towerDefense_tile206.png" id="5_d5203"]
 [ext_resource type="Texture2D" uid="uid://kih4c53syojv" path="res://assets/images/Objects/towerDefense_tile205.png" id="6_d8ers"]
 [ext_resource type="Texture2D" uid="uid://bbioa7o0furq7" path="res://assets/images/Objects/towerDefense_tile204.png" id="7_4vpol"]
+[ext_resource type="PackedScene" uid="uid://bqvxqneg3sog0" path="res://rewards/reward_place.tscn" id="8_cg0a2"]
+[ext_resource type="PackedScene" uid="uid://bxsrgg3gjmurv" path="res://rewards/reward_health.tscn" id="9_rvscx"]
+[ext_resource type="PackedScene" uid="uid://b7mhtrbgiu2tg" path="res://rewards/reward_money.tscn" id="10_mkoot"]
 
 [node name="Game" type="Control"]
 layout_mode = 3
@@ -255,3 +258,103 @@ text = "Restart"
 custom_minimum_size = Vector2(150, 50)
 layout_mode = 2
 text = "Home"
+
+[node name="Reward" type="Control" parent="CanvasLayer"]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Reward"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.647059)
+
+[node name="Control" type="PanelContainer" parent="CanvasLayer/Reward"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -648.5
+offset_top = -288.0
+offset_right = 648.5
+offset_bottom = 288.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Reward/Control"]
+layout_mode = 2
+
+[node name="Space" type="Control" parent="CanvasLayer/Reward/Control/VBoxContainer"]
+custom_minimum_size = Vector2(400, 28)
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Title" type="Label" parent="CanvasLayer/Reward/Control/VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"HeaderLarge"
+theme_override_font_sizes/font_size = 70
+text = "choose an upgrade"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="Space3" type="Control" parent="CanvasLayer/Reward/Control/VBoxContainer"]
+custom_minimum_size = Vector2(400, 28)
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Rewad" type="Control" parent="CanvasLayer/Reward/Control/VBoxContainer"]
+custom_minimum_size = Vector2(400, 200)
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="RewardsParent" type="HBoxContainer" parent="CanvasLayer/Reward/Control/VBoxContainer/Rewad"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -37.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 25
+alignment = 1
+
+[node name="Reward" parent="CanvasLayer/Reward/Control/VBoxContainer/Rewad/RewardsParent" instance=ExtResource("8_cg0a2")]
+layout_mode = 2
+
+[node name="Reward2" parent="CanvasLayer/Reward/Control/VBoxContainer/Rewad/RewardsParent" instance=ExtResource("9_rvscx")]
+layout_mode = 2
+effect = 1
+
+[node name="Reward3" parent="CanvasLayer/Reward/Control/VBoxContainer/Rewad/RewardsParent" instance=ExtResource("10_mkoot")]
+layout_mode = 2
+
+[node name="Space2" type="Control" parent="CanvasLayer/Reward/Control/VBoxContainer"]
+custom_minimum_size = Vector2(400, 50)
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Reward/Control/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 50
+alignment = 1
+
+[node name="SelectReward" type="Button" parent="CanvasLayer/Reward/Control/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+disabled = true
+text = "Select"
+
+[connection signal="pressed" from="CanvasLayer/Reward/Control/VBoxContainer/HBoxContainer/SelectReward" to="." method="_on_select_reward_pressed"]
