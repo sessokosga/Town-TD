@@ -96,7 +96,7 @@ offset_bottom = 125.0
 unique_name_in_owner = true
 layout_mode = 2
 theme_type_variation = &"HeaderLarge"
-text = "Money : 40 000"
+text = "Money : 400"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -145,18 +145,28 @@ size_flags_vertical = 0
 layout_mode = 2
 theme_type_variation = &"HeaderLarge"
 theme_override_font_sizes/font_size = 70
-text = "You Failed"
+text = "Your towns is taken"
 horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
 
 [node name="Space2" type="Control" parent="CanvasLayer/Failure/Control/VBoxContainer"]
-custom_minimum_size = Vector2(400, 150)
+custom_minimum_size = Vector2(400, 70)
 layout_mode = 2
 size_flags_vertical = 0
 
-[node name="Control" type="Control" parent="CanvasLayer/Failure/Control/VBoxContainer"]
+[node name="Status" type="Label" parent="CanvasLayer/Failure/Control/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
+theme_type_variation = &"HeaderLarge"
+text = "You survived 4 waves"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Space3" type="Control" parent="CanvasLayer/Failure/Control/VBoxContainer"]
+custom_minimum_size = Vector2(400, 70)
+layout_mode = 2
+size_flags_vertical = 0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Failure/Control/VBoxContainer"]
 layout_mode = 2

@@ -6,6 +6,7 @@ enum Status {Failure,Playing, Victory}
 @onready var tower_buttons = $"%TowerButtons"
 @onready var tower_parents = $"%TowerParents"
 @onready var level : Level = $BaseLevel
+@onready var lab_status : Label = $"%Status"
 @onready var lab_health : Label = $"%Health"
 @onready var lab_money : Label = $"%Money"
 @onready var ctl_victory : Control = $"%Victory"
@@ -32,22 +33,24 @@ var money : int :
 		if not is_instance_valid(lab_money):
 			return
 		lab_money.text = str("Money : ",money)
+		check_tower_purchase_availabity()
 
 var health : int:
 	set(v):
-		if v <= 0:
-			v = 0
-			status = Status.Failure
 		health = v
 		if not is_instance_valid(lab_health):
 			return
+		if health <= 0:
+			health = 0
+			status = Status.Failure
+			lab_status.text = str("You survived ",level.wave, " waves")
 		lab_health.text = str("Health : ",health)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	status = Status.Playing
-	money = 4000
-	health = 20
+	money = 400
+	health = 10
 	for tb:TowerButton in tower_buttons.get_children():
 		tb.toggled_it.connect(_tower_button_toggled)
 		
@@ -150,6 +153,14 @@ func reset_tower_buttons()->void:
 	tower_cost = 0
 	for tb:TowerButton in tower_buttons.get_children():
 		tb.button_pressed = false
+		
+func check_tower_purchase_availabity()->void:
+	for tb:TowerButton in tower_buttons.get_children():
+		var c = tb.cost
+		if c <= money:
+			tb.disabled = false
+		else:
+			tb.disabled = true
 
 func _on_tower_button_toggled(toggled_on: bool) -> void:
 	$BaseLevel.toggle_tower_places_visibility(toggled_on)

@@ -8,6 +8,7 @@ signal add_tower()
 @onready var box :CollisionShape2D = $"%Box"
 
 var is_occupied = false
+var disabled = true
 @export var type : Tower.Type
 
 # Called when the node enters the scene tree for the first time.

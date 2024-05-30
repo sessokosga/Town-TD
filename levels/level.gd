@@ -11,10 +11,12 @@ signal waves_completed()
 @onready var path :Control = $"%Path"
 @onready var lab_wave :Label = $"%Wave"
 
-@export var max_waves = 4
+var max_waves = 4
 @export var tanks_per_wave = 2
 @export var tank_increase = 2
+@export var starting_places = 10
 @export var debug = false
+@export var reward_wave = [4,10,20,30,50]
 
 var tank_node = preload("res://scenes/tank.tscn")
 var spawn_time = 3
@@ -26,17 +28,25 @@ var wave : int:
 		wave = v
 		if not is_instance_valid(lab_wave):
 			return
-		if v <= max_waves:
-			lab_wave.text = str("Wave ",wave," / ", max_waves)
+		lab_wave.text = str("Wave ",wave)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	wave = 1 
+	
 	for tp:TowerPlace in tower_places.get_children():
 		tp.add_tower.connect(
 			func ():
 				deploy_tower.emit(tp)
 		)
+	# Make random places available
+	var enabled_places = 0
+	while enabled_places < starting_places:
+		var tp :TowerPlace = tower_places.get_children().pick_random()
+		if tp.disabled:
+			tp.disabled = false
+			enabled_places += 1
+			
 
 func _on_tank_dead(tank:Tank)->void:
 	tanks_on_screen -= 1
@@ -72,23 +82,24 @@ func _get_next_target(tg:Vector2)->Vector2:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if wave <= max_waves:
-		time -= delta
-		var tanks_of_the_wave = tanks_per_wave + tank_increase * (wave - 1)
-		if spawned_tanks < tanks_of_the_wave:
-			if time <= 0:
-				spawn_tank()
-				time = spawn_time
-		else:
-			if tanks_on_screen <= 0:
-				wave += 1
-				spawned_tanks = 0
-				tanks_on_screen = 0
+	#if wave <= max_waves:
+	time -= delta
+	var tanks_of_the_wave = tanks_per_wave + tank_increase * (wave - 1)
+	if spawned_tanks < tanks_of_the_wave:
+		if time <= 0:
+			spawn_tank()
+			time = spawn_time
 	else:
 		if tanks_on_screen <= 0:
-			waves_completed.emit()
+			wave += 1
+			spawned_tanks = 0
+			tanks_on_screen = 0
+	#else:
+		#if tanks_on_screen <= 0:
+			#waves_completed.emit()
 func toggle_tower_places_visibility(b:bool)->void:
 	for tp:TowerPlace in tower_places.get_children():
-		tp.visible = b
+		if not tp.disabled :
+			tp.visible = b
 	
 
