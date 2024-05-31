@@ -96,7 +96,6 @@ func _process(delta: float) -> void:
 			#tower.rotate(signf(angle_to) * -1 * min(delta * rotation_speed, abs(angle_to)))
 		else:
 			target = null 
-			tower.rotate(0)
 
 func _on_body_entered(body: Node2D) -> void:
 	if body is Tank and body.status == Tank.Status.Alive:

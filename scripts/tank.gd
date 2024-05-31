@@ -83,8 +83,8 @@ func _physics_process(delta: float) -> void:
 	# Move toward path
 	if target != OUT_OF_BOUNDS:
 		direction = (target - body.global_position).normalized()
-		var angle_to = transform.x.angle_to(direction)
-		rotate(signf(angle_to) * 1 * min(delta * roation_speed, abs(angle_to)) )
+		var angle_to = body.transform.x.angle_to(direction) + deg_to_rad(90)
+		body.rotate(signf(angle_to) * 1 * min(delta * roation_speed, abs(angle_to)) )
 		
 		var rect = hit_area.shape.get_rect()
 		rect.position += global_position
@@ -130,9 +130,9 @@ func _on_animation_sprite_animation_finished() -> void:
 		
 func aim_at_enemy()->void:
 	if is_instance_valid(enemy) and enemy.status == Tower.Status.Alive:
-		var tg = enemy.hit_area.position+enemy.global_position
-		var direction = (tg-global_position).normalized()
-		var angle_to = barrel.transform.x.angle_to(direction)
+		var tg = enemy.global_position
+		var direction = (tg-barrel.global_position).normalized()
+		var angle_to = barrel.transform.x.angle_to(direction) + deg_to_rad(90)
 		barrel.rotate( angle_to)
 	#else:
 		#barrel.rotate(rotation + deg_to_rad(90))
