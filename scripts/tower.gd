@@ -11,6 +11,7 @@ enum Status {Alive, Dead}
 
 var bullet_node = preload("res://scenes/bullet.tscn")
 var big_missile_node = preload("res://scenes/big_missile.tscn")
+var double_missile_node = preload("res://scenes/double_missile.tscn")
 
 var tex_open_single_missile = preload("res://assets/images/Objects/towerDefense_tile206.png")
 
@@ -18,6 +19,7 @@ var tex_open_single_missile = preload("res://assets/images/Objects/towerDefense_
 @onready var hit_area :CollisionShape2D = $"%HitArea"
 @onready var tower:Sprite2D = $"%Tower"
 @onready var bullet_sample :Sprite2D = $"%Bullet"
+@onready var bullet_sample_2 :Sprite2D = $"%Bullet2"
 @onready var lab_health :Label = $"%Health"
 @onready var animated_sprite :AnimatedSprite2D = $"%AnimatedSprite2D"
 @onready var animation_player :AnimationPlayer = $"%AnimationPlayer"
@@ -26,6 +28,7 @@ var rotation_speed = 3
 var target :Tank = null
 var shoot_timer = 1
 var timer_shoot :float =0.5
+var timer_shoot_2 :float = .5
 var status:Status
 var paused = false
 var occupied_place :TowerPlace
@@ -57,6 +60,8 @@ func init_tower()->void:
 			projectile_node = bullet_node
 		Type.OpenSingleMissile:
 			projectile_node = big_missile_node
+		Type.OpenDoubleMissile:
+			projectile_node = double_missile_node
 		
 			
 # Called when the node enters the scene tree for the first time.
@@ -64,13 +69,29 @@ func _ready() -> void:
 	health = 10
 	init_tower()
 
-func shoot(direction:Vector2)->void:
+func shoot(direction:Vector2,second_shoot = false)->void:
+	bullet_sample.hide()
+	if type == Type.OpenDoubleMissile and second_shoot:
+		bullet_sample_2.hide()
+		
 	var bullet : Projectile = projectile_node.instantiate()
 	bullet.direction = direction
 	add_child(bullet)
-	bullet.global_rotation = bullet_sample.global_rotation
-	bullet.global_position = bullet_sample.global_position
+	if second_shoot:
+		bullet.global_rotation = bullet_sample_2.global_rotation
+		bullet.global_position = bullet_sample_2.global_position
+	else:
+		bullet.global_rotation = bullet_sample.global_rotation
+		bullet.global_position = bullet_sample.global_position
 	bullet.sender = Projectile.Sender.Tower
+	
+	get_tree().create_timer(.3).timeout.connect(
+		func ():
+			bullet_sample.show()
+			if type == Type.OpenDoubleMissile and second_shoot:
+				bullet_sample_2.show()
+	)
+	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -78,6 +99,8 @@ func _process(delta: float) -> void:
 		return
 	if is_instance_valid(target) :
 		timer_shoot -= delta
+		if type == Type.OpenDoubleMissile:
+			timer_shoot_2 -= delta
 		if target.status == Tank.Status.Alive:
 			# Aim at tank
 			timer_shoot -= delta
@@ -91,6 +114,10 @@ func _process(delta: float) -> void:
 			if timer_shoot <= 0:
 				timer_shoot = shoot_timer
 				shoot(direction)
+			if type == Type.OpenDoubleMissile:
+				if timer_shoot_2 <= 0:
+					timer_shoot_2 = shoot_timer
+					shoot(direction,true)
 		#else:
 			#var angle_to = 0
 			#tower.rotate(signf(angle_to) * -1 * min(delta * rotation_speed, abs(angle_to)))

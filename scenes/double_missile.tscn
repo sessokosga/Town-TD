@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://7knduo0tc2xu"]
+
+[ext_resource type="Script" path="res://scripts/projectile.gd" id="1_ysuho"]
+[ext_resource type="Texture2D" uid="uid://ccdv6vx46ft20" path="res://assets/images/Objects/towerDefense_tile251.png" id="2_3x74p"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_x8kwp"]
+radius = 4.0
+height = 34.0
+
+[node name="Missile" type="Area2D" groups=["bullet"]]
+script = ExtResource("1_ysuho")
+damage = 0
+
+[node name="BulletGreen1" type="Sprite2D" parent="."]
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("2_3x74p")
+
+[node name="HitArea" type="CollisionShape2D" parent="."]
+unique_name_in_owner = true
+shape = SubResource("CapsuleShape2D_x8kwp")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
