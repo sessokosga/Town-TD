@@ -14,6 +14,11 @@ enum Status {Failure, Playing, Reward, Victory}
 @onready var ctl_failure : Control = $"%Failure"
 @onready var ctl_reward : Control = $"%Reward"
 @onready var btn_select_reward : Button = $"%SelectReward"
+@onready var tb_single_canon : TowerButton = $"%SingleCanon"
+@onready var tb_double_canon : TowerButton = $"%DoubleCanon"
+@onready var tb_open_double_missile : TowerButton = $"%OpenDoubleMissile"
+@onready var tb_open_single_missile : TowerButton = $"%OpenSingleMissile"
+@onready var tb_closed_double_missile : TowerButton = $"%ClosedDoubleMissile"
 
 # Preload tower nodes
 var tower_single_canon_node = preload("res://scenes/tower_single_canon.tscn")
@@ -69,7 +74,7 @@ var health : int:
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	status = Status.Playing
-	money = 40000
+	money = 400
 	health = 10
 	for tb:TowerButton in tower_buttons.get_children():
 		tb.toggled_it.connect(_tower_button_toggled)
@@ -233,6 +238,24 @@ func _apply_reward()->void:
 			health += 2
 		Reward.Effect.AddThousandCoins:
 			money += 1000
+		Reward.Effect.DoubleCanon:
+			tb_double_canon.disabled = false
+			tb_double_canon.show()
+			check_tower_purchase_availabity()
+		Reward.Effect.OpenSingleMissile:
+			tb_open_single_missile.disabled = false
+			tb_open_single_missile.show()
+			check_tower_purchase_availabity()
+		Reward.Effect.OpenDoubleMissile:
+			tb_open_double_missile.disabled = false
+			tb_open_double_missile.show()
+			check_tower_purchase_availabity()
+		Reward.Effect.ClosedDoubleMissile:
+			tb_closed_double_missile.disabled = false
+			tb_closed_double_missile.show()
+			check_tower_purchase_availabity()
+		
+			
 		
 
 func _on_select_reward_pressed() -> void:

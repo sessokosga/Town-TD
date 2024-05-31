@@ -1,7 +1,10 @@
 extends Control
 class_name Reward
 
-enum Effect {AddTwoTowerPlace, AddTwoHealthPoints, AddThousandCoins}
+enum Effect {
+	AddTwoTowerPlace, AddTwoHealthPoints, AddThousandCoins, DoubleCanon, OpenSingleMissile,
+	OpenDoubleMissile, ClosedDoubleMissile
+}
 
 signal active(reward)
 

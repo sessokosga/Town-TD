@@ -9,7 +9,7 @@ height = 34.0
 
 [node name="Missile" type="Area2D" groups=["bullet"]]
 script = ExtResource("1_ysuho")
-damage = 0
+damage = 5
 
 [node name="BulletGreen1" type="Sprite2D" parent="."]
 scale = Vector2(0.6, 0.6)
