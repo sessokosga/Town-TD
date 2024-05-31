@@ -9,15 +9,13 @@ signal add_tower()
 
 var is_occupied = false
 var disabled = true
-@export var type : Tower.Type
+#@export var type : Tower.Type
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	hide()
 	normal.show()
 	hover.hide()
-	pass
-
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

@@ -10,6 +10,7 @@ signal out_of_screen(tank)
 @onready var center :CollisionShape2D = $"%Center"
 @onready var hit_area :CollisionShape2D = $"%HitArea"
 @onready var _range :CollisionShape2D = $"%Range"
+@onready var body :Sprite2D = $"%Body"
 @onready var barrel :Sprite2D = $"%Barrel"
 @onready var bullet_sample :Sprite2D = $"%Bullet"
 @onready var lab_health :Label = $"%Health"
@@ -57,12 +58,12 @@ func _ready() -> void:
 	status = Status.Alive
 
 func shoot(direction:Vector2)->void:
-	var bullet : Bullet = bullet_node.instantiate()
+	var bullet : Projectile = bullet_node.instantiate()
 	get_tree().root.add_child(bullet)
 	bullet.direction = direction
 	bullet.global_rotation = bullet_sample.global_rotation
 	bullet.global_position = bullet_sample.global_position
-	bullet.sender = Bullet.Sender.Tank
+	bullet.sender = Projectile.Sender.Tank
 
 func _physics_process(delta: float) -> void:
 	if status == Status.Dead or paused:
@@ -81,7 +82,7 @@ func _physics_process(delta: float) -> void:
 	
 	# Move toward path
 	if target != OUT_OF_BOUNDS:
-		direction = (target - position).normalized()
+		direction = (target - body.global_position).normalized()
 		var angle_to = transform.x.angle_to(direction)
 		rotate(signf(angle_to) * 1 * min(delta * roation_speed, abs(angle_to)) )
 		
@@ -131,7 +132,7 @@ func aim_at_enemy()->void:
 	if is_instance_valid(enemy) and enemy.status == Tower.Status.Alive:
 		var tg = enemy.hit_area.position+enemy.global_position
 		var direction = (tg-global_position).normalized()
-		var angle_to = barrel.transform.y.angle_to(-direction)
-		barrel.rotate(angle_to)
-	else:
-		barrel.rotate(0)
+		var angle_to = barrel.transform.x.angle_to(direction)
+		barrel.rotate( angle_to)
+	#else:
+		#barrel.rotate(rotation + deg_to_rad(90))

@@ -96,7 +96,6 @@ func _process(delta: float) -> void:
 		return
 	
 	progress.value = wave_count * 100 / (reward_wave[next_reward_target])
-	#if wave <= max_waves:
 	time -= delta
 	var tanks_of_the_wave = tanks_per_wave + tank_increase * (wave - 1)
 	if spawned_tanks < tanks_of_the_wave:
@@ -109,9 +108,7 @@ func _process(delta: float) -> void:
 			wave += 1
 			spawned_tanks = 0
 			tanks_on_screen = 0
-			
-	print("wave count ",wave_count,"\t target ",reward_wave[next_reward_target])
-			
+
 func toggle_tower_places_visibility(b:bool)->void:
 	for tp:TowerPlace in tower_places.get_children():
 		if not tp.disabled :

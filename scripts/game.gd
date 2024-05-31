@@ -15,10 +15,14 @@ enum Status {Failure, Playing, Reward, Victory}
 @onready var ctl_reward : Control = $"%Reward"
 @onready var btn_select_reward : Button = $"%SelectReward"
 
+# Preload tower nodes
+var tower_single_canon_node = preload("res://scenes/tower_single_canon.tscn")
+var tower_open_single_missile_node = preload("res://scenes/tower_open_single_missile.tscn")
 
-var tower_node = preload("res://scenes/tower.tscn")
 var tower_cost = 0
 var selected_reward : Reward = null
+var selected_tower_button : TowerButton = null
+
 var status : Status:
 	set(v):
 		status = v
@@ -62,7 +66,7 @@ var health : int:
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	status = Status.Playing
-	money = 400
+	money = 40000
 	health = 10
 	for tb:TowerButton in tower_buttons.get_children():
 		tb.toggled_it.connect(_tower_button_toggled)
@@ -97,9 +101,14 @@ func _on_tank_got_a_way()->void:
 	health -= 1
 
 func _on_deploy_tower(place:TowerPlace)->void:
-	var tower :Tower = tower_node.instantiate()
+	var tower :Tower 
+	match selected_tower_button.type:
+		Tower.Type.SingleCanon:
+			tower = tower_single_canon_node.instantiate()
+		Tower.Type.OpenSingleMissile:
+			tower = tower_open_single_missile_node.instantiate()
+			
 	towers_parent.add_child(tower)
-	tower.type = place.type
 	tower.position = place.position
 	tower.occupied_place = place
 	money -= tower_cost
@@ -109,6 +118,7 @@ func _on_deploy_tower(place:TowerPlace)->void:
 func _tower_button_toggled(tb:TowerButton)->void:
 	var reset = true
 	if tb.button_pressed:
+		selected_tower_button = tb
 		tower_cost = tb.cost
 		for tbt:TowerButton in tower_buttons.get_children():
 			level.toggle_tower_places_visibility(true)
@@ -172,8 +182,8 @@ func _process(delta: float) -> void:
 					#tank.barrel.rotate(angle_to)
 				
 		# Check collision between bullet and tanks
-		for bullet:Bullet in get_tree().get_nodes_in_group("bullet"):
-			if bullet.sender == Bullet.Sender.Tower:
+		for bullet:Projectile in get_tree().get_nodes_in_group("bullet"):
+			if bullet.sender == Projectile.Sender.Tower:
 				for tank:Tank in level.tank_parents.get_children():
 					var rect = tank.hit_area.shape.get_rect()
 					rect.position += tank.global_position
@@ -181,7 +191,7 @@ func _process(delta: float) -> void:
 						tank.take_damage(bullet.damage)
 						bullet.destroy()
 						
-			elif bullet.sender == Bullet.Sender.Tank:
+			elif bullet.sender == Projectile.Sender.Tank:
 				for tower:Tower in towers_parent.get_children():
 					var rect = tower.hit_area.shape.get_rect()
 					rect.position += tower.global_position

@@ -1,5 +1,5 @@
 extends Area2D
-class_name Bullet
+class_name Projectile
 
 @onready var hit_area = $"%HitArea"
 

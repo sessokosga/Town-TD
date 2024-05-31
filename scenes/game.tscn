@@ -42,12 +42,14 @@ layout_mode = 2
 cost = 150
 
 [node name="TowerButton2" parent="PanelContainer/TowerButtons" instance=ExtResource("3_clwx2")]
+visible = false
 layout_mode = 2
 texture_normal = ExtResource("4_tgah8")
 type = 1
 cost = 200
 
 [node name="TowerButton5" parent="PanelContainer/TowerButtons" instance=ExtResource("3_clwx2")]
+visible = false
 layout_mode = 2
 texture_normal = ExtResource("7_4vpol")
 type = 4
@@ -60,6 +62,7 @@ type = 2
 cost = 300
 
 [node name="TowerButton4" parent="PanelContainer/TowerButtons" instance=ExtResource("3_clwx2")]
+visible = false
 layout_mode = 2
 texture_normal = ExtResource("6_d8ers")
 type = 3
@@ -261,6 +264,7 @@ text = "Home"
 
 [node name="Reward" type="Control" parent="CanvasLayer"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -324,7 +328,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_bottom = -37.0
+offset_top = 46.0
+offset_bottom = 9.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 25
@@ -335,7 +340,6 @@ layout_mode = 2
 
 [node name="Reward2" parent="CanvasLayer/Reward/Control/VBoxContainer/Rewad/RewardsParent" instance=ExtResource("9_rvscx")]
 layout_mode = 2
-effect = 1
 
 [node name="Reward3" parent="CanvasLayer/Reward/Control/VBoxContainer/Rewad/RewardsParent" instance=ExtResource("10_mkoot")]
 layout_mode = 2
