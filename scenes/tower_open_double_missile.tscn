@@ -103,6 +103,7 @@ _data = {
 
 [node name="Tower" type="Area2D" groups=["tower"]]
 script = ExtResource("1_wueqa")
+bullet_type = 1
 type = 3
 
 [node name="Base" type="Sprite2D" parent="."]

@@ -8,6 +8,8 @@ enum Type {
 }
 
 enum Status {Alive, Dead}
+enum BulletType {Single, Double}
+enum BulletGenre {Bullet, Missile}
 
 var bullet_node = preload("res://scenes/bullet.tscn")
 var big_missile_node = preload("res://scenes/big_missile.tscn")
@@ -34,6 +36,8 @@ var paused = false
 var occupied_place :TowerPlace
 var projectile_node = null
 
+@export var bullet_type : BulletType
+@export var bullet_genre : BulletGenre
 @export var type:Type:
 	set(v):
 		type = v
@@ -56,11 +60,11 @@ var max_health:int
 
 func init_tower()->void:
 	match type:
-		Type.SingleCanon:
+		var t when t == Type.SingleCanon or t == Type.DoubleCanon:
 			projectile_node = bullet_node
 		Type.OpenSingleMissile:
 			projectile_node = big_missile_node
-		Type.OpenDoubleMissile:
+		var t when t == Type.OpenDoubleMissile or t == Type.ClosedDoubleMissile:
 			projectile_node = double_missile_node
 		
 			
@@ -70,13 +74,18 @@ func _ready() -> void:
 	init_tower()
 
 func shoot(direction:Vector2,second_shoot = false)->void:
-	bullet_sample.hide()
-	if type == Type.OpenDoubleMissile and second_shoot:
-		bullet_sample_2.hide()
+	if bullet_genre == BulletGenre.Missile:
+		bullet_sample.hide()
+		if bullet_type == BulletType.Double and second_shoot:
+			bullet_sample_2.hide()
 		
 	var bullet : Projectile = projectile_node.instantiate()
 	bullet.direction = direction
 	add_child(bullet)
+	
+	if type == Type.ClosedDoubleMissile:
+		bullet.show_behind_parent = true
+	
 	if second_shoot:
 		bullet.global_rotation = bullet_sample_2.global_rotation
 		bullet.global_position = bullet_sample_2.global_position
@@ -87,9 +96,10 @@ func shoot(direction:Vector2,second_shoot = false)->void:
 	
 	get_tree().create_timer(.3).timeout.connect(
 		func ():
-			bullet_sample.show()
-			if type == Type.OpenDoubleMissile and second_shoot:
-				bullet_sample_2.show()
+			if bullet_genre == BulletGenre.Missile:
+				bullet_sample.show()
+				if bullet_type == BulletType.Double and second_shoot:
+					bullet_sample_2.show()
 	)
 	
 
@@ -99,7 +109,7 @@ func _process(delta: float) -> void:
 		return
 	if is_instance_valid(target) :
 		timer_shoot -= delta
-		if type == Type.OpenDoubleMissile:
+		if bullet_type == BulletType.Double:
 			timer_shoot_2 -= delta
 		if target.status == Tank.Status.Alive:
 			# Aim at tank
@@ -114,7 +124,7 @@ func _process(delta: float) -> void:
 			if timer_shoot <= 0:
 				timer_shoot = shoot_timer
 				shoot(direction)
-			if type == Type.OpenDoubleMissile:
+			if bullet_type == BulletType.Double:
 				if timer_shoot_2 <= 0:
 					timer_shoot_2 = shoot_timer
 					shoot(direction,true)

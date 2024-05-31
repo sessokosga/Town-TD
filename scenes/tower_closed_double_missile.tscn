@@ -1,14 +1,14 @@
-[gd_scene load_steps=16 format=3 uid="uid://cd1swp3kfpn6n"]
+[gd_scene load_steps=16 format=3 uid="uid://ixxdww0gr2un"]
 
-[ext_resource type="Script" path="res://scripts/tower.gd" id="1_tgscn"]
-[ext_resource type="Texture2D" uid="uid://c2q0qktwvrq0x" path="res://assets/images/Objects/towerDefense_tile183.png" id="2_s23pl"]
-[ext_resource type="Texture2D" uid="uid://t75iqol51gf7" path="res://assets/images/Objects/towerDefense_tile249.png" id="3_ox2la"]
-[ext_resource type="Texture2D" uid="uid://bdhge7iwjltkl" path="res://assets/images/Objects/bulletRed1.png" id="4_a5btc"]
-[ext_resource type="Texture2D" uid="uid://c3a1g5wfyo75u" path="res://assets/images/Objects/explosionSmoke1.png" id="5_a5ons"]
-[ext_resource type="Texture2D" uid="uid://b7c3glymbbgky" path="res://assets/images/Objects/explosionSmoke2.png" id="6_uly4b"]
-[ext_resource type="Texture2D" uid="uid://bch88vmcxr1oy" path="res://assets/images/Objects/explosionSmoke3.png" id="7_42e1v"]
-[ext_resource type="Texture2D" uid="uid://c6illwhktx105" path="res://assets/images/Objects/explosionSmoke4.png" id="8_2d681"]
-[ext_resource type="Texture2D" uid="uid://il6frytryete" path="res://assets/images/Objects/explosionSmoke5.png" id="9_mlh1b"]
+[ext_resource type="Script" path="res://scripts/tower.gd" id="1_8xkbp"]
+[ext_resource type="Texture2D" uid="uid://c2q0qktwvrq0x" path="res://assets/images/Objects/towerDefense_tile183.png" id="2_epagx"]
+[ext_resource type="Texture2D" uid="uid://c8nsbgy6bnt3e" path="res://assets/images/Objects/towerDefense_tile227.png" id="3_pyyis"]
+[ext_resource type="Texture2D" uid="uid://ccdv6vx46ft20" path="res://assets/images/Objects/towerDefense_tile251.png" id="4_yblko"]
+[ext_resource type="Texture2D" uid="uid://c3a1g5wfyo75u" path="res://assets/images/Objects/explosionSmoke1.png" id="5_1fx88"]
+[ext_resource type="Texture2D" uid="uid://b7c3glymbbgky" path="res://assets/images/Objects/explosionSmoke2.png" id="6_chogk"]
+[ext_resource type="Texture2D" uid="uid://bch88vmcxr1oy" path="res://assets/images/Objects/explosionSmoke3.png" id="7_mr3oi"]
+[ext_resource type="Texture2D" uid="uid://c6illwhktx105" path="res://assets/images/Objects/explosionSmoke4.png" id="8_g1quv"]
+[ext_resource type="Texture2D" uid="uid://il6frytryete" path="res://assets/images/Objects/explosionSmoke5.png" id="9_b270h"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_h7svu"]
 resource_local_to_scene = true
@@ -22,19 +22,19 @@ radius = 170.0
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("5_a5ons")
+"texture": ExtResource("5_1fx88")
 }, {
 "duration": 1.0,
-"texture": ExtResource("6_uly4b")
+"texture": ExtResource("6_chogk")
 }, {
 "duration": 1.0,
-"texture": ExtResource("7_42e1v")
+"texture": ExtResource("7_mr3oi")
 }, {
 "duration": 1.0,
-"texture": ExtResource("8_2d681")
+"texture": ExtResource("8_g1quv")
 }, {
 "duration": 1.0,
-"texture": ExtResource("9_mlh1b")
+"texture": ExtResource("9_b270h")
 }],
 "loop": false,
 "name": &"explosion",
@@ -101,25 +101,34 @@ _data = {
 "explosion": SubResource("Animation_4qa34")
 }
 
-[node name="SingleCanon" type="Area2D" groups=["tower"]]
-script = ExtResource("1_tgscn")
+[node name="Tower" type="Area2D" groups=["tower"]]
+script = ExtResource("1_8xkbp")
+bullet_type = 1
+bullet_genre = 1
+type = 4
 
 [node name="Base" type="Sprite2D" parent="."]
 unique_name_in_owner = true
 position = Vector2(0, 18)
-texture = ExtResource("2_s23pl")
+texture = ExtResource("2_epagx")
 
 [node name="Tower" type="Sprite2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(0, 2.02656e-06)
+position = Vector2(0, 10)
 scale = Vector2(0.6875, 0.6875)
-texture = ExtResource("3_ox2la")
+texture = ExtResource("3_pyyis")
 
 [node name="Bullet" type="Sprite2D" parent="Tower"]
 unique_name_in_owner = true
-visible = false
-position = Vector2(0, -71.2727)
-texture = ExtResource("4_a5btc")
+show_behind_parent = true
+position = Vector2(-13.0909, -21.8181)
+texture = ExtResource("4_yblko")
+
+[node name="Bullet2" type="Sprite2D" parent="Tower"]
+unique_name_in_owner = true
+show_behind_parent = true
+position = Vector2(13.0909, -21.8181)
+texture = ExtResource("4_yblko")
 
 [node name="HitArea" type="CollisionShape2D" parent="."]
 unique_name_in_owner = true

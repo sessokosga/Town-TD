@@ -1,8 +1,8 @@
-[gd_scene load_steps=16 format=3 uid="uid://cd1swp3kfpn6n"]
+[gd_scene load_steps=16 format=3 uid="uid://c8ddhm04f056i"]
 
 [ext_resource type="Script" path="res://scripts/tower.gd" id="1_tgscn"]
 [ext_resource type="Texture2D" uid="uid://c2q0qktwvrq0x" path="res://assets/images/Objects/towerDefense_tile183.png" id="2_s23pl"]
-[ext_resource type="Texture2D" uid="uid://t75iqol51gf7" path="res://assets/images/Objects/towerDefense_tile249.png" id="3_ox2la"]
+[ext_resource type="Texture2D" uid="uid://bxvwh6natbs7o" path="res://assets/images/Objects/towerDefense_tile250.png" id="3_4ogod"]
 [ext_resource type="Texture2D" uid="uid://bdhge7iwjltkl" path="res://assets/images/Objects/bulletRed1.png" id="4_a5btc"]
 [ext_resource type="Texture2D" uid="uid://c3a1g5wfyo75u" path="res://assets/images/Objects/explosionSmoke1.png" id="5_a5ons"]
 [ext_resource type="Texture2D" uid="uid://b7c3glymbbgky" path="res://assets/images/Objects/explosionSmoke2.png" id="6_uly4b"]
@@ -101,8 +101,10 @@ _data = {
 "explosion": SubResource("Animation_4qa34")
 }
 
-[node name="SingleCanon" type="Area2D" groups=["tower"]]
+[node name="DoubleCanon" type="Area2D" groups=["tower"]]
 script = ExtResource("1_tgscn")
+bullet_type = 1
+type = 1
 
 [node name="Base" type="Sprite2D" parent="."]
 unique_name_in_owner = true
@@ -113,12 +115,18 @@ texture = ExtResource("2_s23pl")
 unique_name_in_owner = true
 position = Vector2(0, 2.02656e-06)
 scale = Vector2(0.6875, 0.6875)
-texture = ExtResource("3_ox2la")
+texture = ExtResource("3_4ogod")
 
 [node name="Bullet" type="Sprite2D" parent="Tower"]
 unique_name_in_owner = true
 visible = false
-position = Vector2(0, -71.2727)
+position = Vector2(11.6364, -71.2727)
+texture = ExtResource("4_a5btc")
+
+[node name="Bullet2" type="Sprite2D" parent="Tower"]
+unique_name_in_owner = true
+visible = false
+position = Vector2(-13.0909, -71.2727)
 texture = ExtResource("4_a5btc")
 
 [node name="HitArea" type="CollisionShape2D" parent="."]

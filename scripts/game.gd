@@ -17,8 +17,10 @@ enum Status {Failure, Playing, Reward, Victory}
 
 # Preload tower nodes
 var tower_single_canon_node = preload("res://scenes/tower_single_canon.tscn")
+var tower_double_canon_node = preload("res://scenes/tower_double_canon.tscn")
 var tower_open_single_missile_node = preload("res://scenes/tower_open_single_missile.tscn")
 var tower_open_double_missile_node = preload("res://scenes/tower_open_double_missile.tscn")
+var tower_closed_double_missile_node = preload("res://scenes/tower_closed_double_missile.tscn")
 
 var tower_cost = 0
 var selected_reward : Reward = null
@@ -106,10 +108,14 @@ func _on_deploy_tower(place:TowerPlace)->void:
 	match selected_tower_button.type:
 		Tower.Type.SingleCanon:
 			tower = tower_single_canon_node.instantiate()
+		Tower.Type.DoubleCanon:
+			tower = tower_double_canon_node.instantiate()
 		Tower.Type.OpenSingleMissile:
 			tower = tower_open_single_missile_node.instantiate()
 		Tower.Type.OpenDoubleMissile:
 			tower = tower_open_double_missile_node.instantiate()
+		Tower.Type.ClosedDoubleMissile:
+			tower = tower_closed_double_missile_node.instantiate()
 			
 	towers_parent.add_child(tower)
 	tower.position = place.position

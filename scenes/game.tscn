@@ -42,14 +42,12 @@ layout_mode = 2
 cost = 150
 
 [node name="TowerButton2" parent="PanelContainer/TowerButtons" instance=ExtResource("3_clwx2")]
-visible = false
 layout_mode = 2
 texture_normal = ExtResource("4_tgah8")
 type = 1
 cost = 200
 
 [node name="TowerButton5" parent="PanelContainer/TowerButtons" instance=ExtResource("3_clwx2")]
-visible = false
 layout_mode = 2
 texture_normal = ExtResource("7_4vpol")
 type = 4
