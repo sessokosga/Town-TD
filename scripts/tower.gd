@@ -14,7 +14,7 @@ enum BulletGenre {Bullet, Missile}
 var bullet_node = preload("res://scenes/bullet.tscn")
 var big_missile_node = preload("res://scenes/big_missile.tscn")
 var double_missile_node = preload("res://scenes/double_missile.tscn")
-var bullet_green = preload("res://assets/images/Objects/bulletGreen1.png")
+var bullet_tex = preload("res://assets/images/Objects/shotThin.png")
 var tex_open_single_missile = preload("res://assets/images/Objects/towerDefense_tile206.png")
 
 @onready var _range :CollisionShape2D = $"%Range"
@@ -29,7 +29,7 @@ var tex_open_single_missile = preload("res://assets/images/Objects/towerDefense_
 
 var rotation_speed = 3
 var target :Tank = null
-var shoot_timer = 1
+var shoot_timer = 2
 var timer_shoot :float =0.5
 var timer_shoot_2 :float = .5
 var status:Status
@@ -75,6 +75,7 @@ func init_tower()->void:
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	#health = 10
+	_range.show()
 	init_tower()
 
 func shoot(direction:Vector2,second_shoot = false)->void:
@@ -86,8 +87,12 @@ func shoot(direction:Vector2,second_shoot = false)->void:
 	var bullet : Projectile = projectile_node.instantiate()
 	bullet.direction = direction
 	add_child(bullet)
-	if type == Type.SingleCanon:
-		bullet.texture = bullet_green
+	if type == Type.SingleCanon or type == Type.DoubleCanon:
+		bullet.texture = bullet_tex
+		AudioPlayer.play_sfx(AudioPlayer.SFX.TowerNormalShoot)
+	else:
+		AudioPlayer.play_sfx(AudioPlayer.SFX.TowerMissilelShoot)
+		
 	
 	if type == Type.ClosedDoubleMissile:
 		bullet.show_behind_parent = true
@@ -113,6 +118,20 @@ func shoot(direction:Vector2,second_shoot = false)->void:
 func _process(delta: float) -> void:
 	if status == Status.Dead or paused:
 		return
+		
+	# Get a tank to shoot at
+	var rect = _range.shape.get_rect()
+	rect.position += global_position
+	if not is_instance_valid(target) or target.status == Tank.Status.Dead:
+		for tank:Tank in get_tree().get_nodes_in_group("tank"):
+			if rect.has_point(tank.hit_area.global_position) and tank.status == Tank.Status.Alive:
+				target = tank
+				
+	# Check if the target is no more in range
+	elif not rect.has_point(target.hit_area.global_position):
+		target = null
+	#aim_at_enemy()
+		
 	if is_instance_valid(target) :
 		timer_shoot -= delta
 		if bullet_type == BulletType.Double:
@@ -141,14 +160,16 @@ func _process(delta: float) -> void:
 			target = null 
 
 func _on_body_entered(body: Node2D) -> void:
-	if body is Tank and body.status == Tank.Status.Alive:
-		target = body
+	#if body is Tank and body.status == Tank.Status.Alive:
+		#target = body
+	pass
 
 func _on_body_exited(body: Node2D) -> void:
-	if body is Tank:
-		if body == target:
-			target = null
-
+	#if body is Tank:
+		#if body == target:
+			#target = null
+	pass
+	
 func take_damage(damage:float)->void:
 	health -= damage
 

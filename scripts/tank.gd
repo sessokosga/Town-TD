@@ -38,23 +38,23 @@ var barrel_sample_3 :Sprite2D
 		
 var body_blue = preload("res://assets/images/Objects/tankBody_blue.png")
 var barrel_blue = preload("res://assets/images/Objects/tankBlue_barrel2.png")
-var bullet_blue = preload("res://assets/images/Objects/bulletBlue1.png")
+var bullet_blue = preload("res://assets/images/Objects/bulletBlue3_outline.png")
 
 var body_green = preload("res://assets/images/Objects/tankBody_green.png")
 var barrel_green = preload("res://assets/images/Objects/tankGreen_barrel2.png")
-var bullet_green = preload("res://assets/images/Objects/bulletGreen1.png")
+var bullet_green = preload("res://assets/images/Objects/bulletGreen3_outline.png")
 
 var body_sand = preload("res://assets/images/Objects/tankBody_sand.png")
 var barrel_sand = preload("res://assets/images/Objects/tankSand_barrel2.png")
-var bullet_sand = preload("res://assets/images/Objects/bulletSand1.png")
+var bullet_sand = preload("res://assets/images/Objects/bulletSand3_outline.png")
 
 var body_red = preload("res://assets/images/Objects/tankBody_red.png")
 var barrel_red = preload("res://assets/images/Objects/tankRed_barrel2.png")
-var bullet_red = preload("res://assets/images/Objects/bulletRed1.png")
+var bullet_red = preload("res://assets/images/Objects/bulletRed3_outline.png")
 
 var body_dark = preload("res://assets/images/Objects/tankBody_dark.png")
 var barrel_dark = preload("res://assets/images/Objects/tankDark_barrel2.png")
-var bullet_dark = preload("res://assets/images/Objects/bulletDark1.png")
+var bullet_dark = preload("res://assets/images/Objects/bulletDark3_outline.png")
 
 var bullet_node 
 var paused = false
@@ -71,7 +71,7 @@ var target : Vector2 = OUT_OF_BOUNDS :
 			out_of_screen.emit(self)
 			queue_free()
 
-@export var speed = 300.0
+@export var speed = 100.0
 @export var health :int:
 	set(v):
 		health = v
@@ -160,11 +160,9 @@ func _ready() -> void:
 	status = Status.Alive
 
 func shoot(direction:Vector2,pos = ShootPos.First)->void:
-	AudioPlayer.play_sfx(AudioPlayer.SFX.TankShoot)
 	var bullet : Projectile = bullet_node.instantiate()
 	get_tree().root.add_child(bullet)
-	bullet.direction = Vector2.ZERO
-	#bullet.direction = direction
+	bullet.direction = direction
 	bullet.texture = bullet_texture
 	match pos:
 		ShootPos.Third:
@@ -177,6 +175,13 @@ func shoot(direction:Vector2,pos = ShootPos.First)->void:
 			bullet.global_rotation = bullet_sample.global_rotation
 			bullet.global_position = bullet_sample.global_position
 	bullet.sender = Projectile.Sender.Tank
+	
+	match type:
+		var t when t == Type.Huge or t == Type.Large or t == Type.BigRed:
+			AudioPlayer.play_sfx(AudioPlayer.SFX.TankShootBig)
+		_:
+			AudioPlayer.play_sfx(AudioPlayer.SFX.TankShootNormal)
+	
 
 func _physics_process(delta: float) -> void:
 	if status == Status.Dead or paused:
@@ -235,7 +240,7 @@ func _physics_process(delta: float) -> void:
 func _process(delta: float) -> void:
 	if status == Status.Dead or paused:
 		return
-	# Get an enemy to shoot at
+	# Get a tower enemy to shoot at
 	var rect = _range.shape.get_rect()
 	rect.position += global_position
 	if not is_instance_valid(enemy) or enemy.status == Tank.Status.Dead:

@@ -230,6 +230,7 @@ func _on_tower_button_toggled(toggled_on: bool) -> void:
 	$BaseLevel.toggle_tower_places_visibility(toggled_on)
 
 func _apply_reward()->void:
+	AudioPlayer.play_ui(AudioPlayer.UI.Confirm)
 	selected_reward.hide()
 	match selected_reward.effect:
 		Reward.Effect.AddTwoTowerPlace:

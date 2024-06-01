@@ -18,6 +18,7 @@ var selected: bool:
 		if not is_instance_valid(bg_color):
 			return
 		if selected:
+			AudioPlayer.play_ui(AudioPlayer.UI.Select)
 			bg_color.color = "ffffff80" 
 		else:
 			bg_color.color =  "ffffff00"
@@ -30,7 +31,7 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if not selected and is_instance_valid(bg_color):
+	if not selected and is_instance_valid(bg_color) and visible:
 		if get_global_rect().has_point(get_global_mouse_position()):
 			bg_color.color = "d1d1d14e"
 		else:

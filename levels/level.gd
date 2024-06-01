@@ -41,6 +41,7 @@ var wave : int:
 			return
 		if wave_count == reward_wave[next_reward_target]:
 			raise_reward.emit()
+			AudioPlayer.play_ui(AudioPlayer.UI.RewardUnlocked)
 			next_reward_target += 1
 			wave_count = 0
 			progress.value = progress.max_value
@@ -73,7 +74,7 @@ func _on_tank_out_of_screen(tank:Tank)->void:
 	tanks_on_screen -= 1
 	tank_got_a_way.emit()
 
-func spawn_tank(type:Tank.Type = Tank.Type.Large)->void:
+func spawn_tank(type:Tank.Type = Tank.Type.Blue)->void:
 	var tank :Tank
 	if type == Tank.Type.BigRed:
 		tank = tank_big_node.instantiate()

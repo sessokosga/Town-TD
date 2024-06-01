@@ -5,8 +5,17 @@ enum SFX{
 	TankHugeExplosion,
 	TankBigExplosion,
 	TankMedExplosion,
-	TankShoot,
-	TowerNormalExplosion
+	TankShootNormal,
+	TankShootBig,
+	TowerNormalExplosion,
+	TowerNormalShoot,
+	TowerMissilelShoot,
+}
+
+enum UI {
+	Select,
+	Confirm,
+	RewardUnlocked
 }
 
 
@@ -22,16 +31,22 @@ enum Music{
 			stop_music_loop()
 
 # UI
+const ui_select = preload("res://assets/audio/ui/Analog Synthesized UI - Button Click Tone 1.wav")
+const ui_confirm = preload("res://assets/audio/ui/Success 2a.wav")
+const ui_reward = preload("res://assets/audio/ui/The Chris Alan - 8-Bit SFX & UI - Eerie Notification 10.wav")
 
 # Music
 
 # SFX
-const tank_normal_explosion = preload("res://assets/audio/sfx/tank/explosion_large_no_tail_03.wav")
+const tank_normal_explosion = preload("res://assets/audio/sfx/tank/DeepExplosion02.wav")
 const tank_huge_explosion = preload("res://assets/audio/sfx/tank/BigExplosion02.wav")
 const tank_large_explosion = preload("res://assets/audio/sfx/tank/explosion_med_long_tail_01.wav")
 const tank_big_explosion = preload("res://assets/audio/sfx/tank/Explosion 8.wav")
-const tank_shoot = preload("res://assets/audio/sfx/tank/bullet_impact_ice_06.wav")
+const tank_shoot_normal = preload("res://assets/audio/sfx/tank/gun_pistol_shot_silenced_04.wav")
+const tank_shoot_big = preload("res://assets/audio/sfx/tank/gun_silenced_sniper1_shot_01.wav")
 const tower_normal_explosion = preload("res://assets/audio/sfx/tower/DeepExplosion02.wav")
+const tower_normal_shoot = preload("res://assets/audio/sfx/tower/Assault Rifle - M4 - 03 - Burst 03.wav")
+const tower_missile_shoot = preload("res://assets/audio/sfx/tower/Cocking_11.wav")
 
 var current_music_loop_id : Music
 var current_music_loop : AudioStreamPlayer = null
@@ -48,6 +63,38 @@ func _ready() -> void:
 	#if music_enabled:
 		#play_music(Music.DeadWalking,true)
 
+func play_ui(id:UI,looping=false)->bool:
+	if music_enabled == false:
+		return false
+	var stream 
+	match id:
+		UI.Select:
+			stream = ui_select
+		UI.Confirm:
+			stream = ui_confirm
+		UI.RewardUnlocked:
+			stream = ui_reward
+		_:
+			push_error("UI sound ",id," not found")
+			return false
+			
+	var asp = AudioStreamPlayer.new()
+	asp.stream = stream
+	asp.name = "UI "
+	add_child(asp)
+	asp.play()
+	
+	asp.finished.connect(
+		func()->void:
+			if looping:
+				asp.stream_paused = false
+				asp.play()
+			else:
+				asp.queue_free()
+			
+			)
+	return true
+
 func play_sfx(id:SFX,looping=false)->bool:
 	if music_enabled == false:
 		return false
@@ -61,10 +108,16 @@ func play_sfx(id:SFX,looping=false)->bool:
 			stream = tank_huge_explosion
 		SFX.TankMedExplosion:
 			stream = tank_large_explosion
-		SFX.TankShoot:
-			stream = tank_shoot
+		SFX.TankShootNormal:
+			stream = tank_shoot_normal
+		SFX.TankShootBig:
+			stream = tank_shoot_big
 		SFX.TowerNormalExplosion:
 			stream = tower_normal_explosion
+		SFX.TowerMissilelShoot:
+			stream = tower_missile_shoot
+		SFX.TowerNormalShoot:
+			stream = tower_normal_shoot
 		_:
 			push_error("SFX ",id," not found")
 			return false
