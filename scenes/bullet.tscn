@@ -10,7 +10,7 @@ height = 16.0
 [node name="Bullet" type="Area2D" groups=["bullet"]]
 script = ExtResource("1_v1h2k")
 
-[node name="BulletGreen1" type="Sprite2D" parent="."]
+[node name="Texture" type="Sprite2D" parent="."]
 texture = ExtResource("2_o6dku")
 
 [node name="HitArea" type="CollisionShape2D" parent="."]

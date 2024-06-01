@@ -32,21 +32,29 @@ var barrel_sample_3 :Sprite2D
 @export var type : Type :
 	set(v):
 		type = v
-
+		if not is_instance_valid(lab_health):
+			return
+		init_tank()
+		
 var body_blue = preload("res://assets/images/Objects/tankBody_blue.png")
 var barrel_blue = preload("res://assets/images/Objects/tankBlue_barrel2.png")
+var bullet_blue = preload("res://assets/images/Objects/bulletBlue1.png")
 
 var body_green = preload("res://assets/images/Objects/tankBody_green.png")
 var barrel_green = preload("res://assets/images/Objects/tankGreen_barrel2.png")
+var bullet_green = preload("res://assets/images/Objects/bulletGreen1.png")
 
 var body_sand = preload("res://assets/images/Objects/tankBody_sand.png")
 var barrel_sand = preload("res://assets/images/Objects/tankSand_barrel2.png")
+var bullet_sand = preload("res://assets/images/Objects/bulletSand1.png")
 
 var body_red = preload("res://assets/images/Objects/tankBody_red.png")
 var barrel_red = preload("res://assets/images/Objects/tankRed_barrel2.png")
+var bullet_red = preload("res://assets/images/Objects/bulletRed1.png")
 
 var body_dark = preload("res://assets/images/Objects/tankBody_dark.png")
 var barrel_dark = preload("res://assets/images/Objects/tankDark_barrel2.png")
+var bullet_dark = preload("res://assets/images/Objects/bulletDark1.png")
 
 var bullet_node 
 var paused = false
@@ -97,6 +105,7 @@ var timer_shoot :float =0.1
 var timer_shoot_2 :float =.6
 var timer_shoot_3 :float =1.1
 var status:Status
+var bullet_texture : Texture2D
 
 func init_tank()->void:
 	lab_health.text = str(health)
@@ -104,22 +113,33 @@ func init_tank()->void:
 		Type.Blue:
 			body.texture = body_blue
 			barrel.texture = barrel_blue
+			bullet_texture = bullet_blue
 		Type.Red:
 			body.texture = body_red
 			barrel.texture = barrel_red
+			bullet_texture = bullet_red
 		Type.Sand:
 			body.texture = body_sand
 			barrel.texture = barrel_sand
+			bullet_texture = bullet_sand
 		Type.Green:
 			body.texture = body_green
 			barrel.texture = barrel_green
+			bullet_texture = bullet_green
 		Type.Dark:
 			body.texture = body_dark
 			barrel.texture = barrel_dark
+			bullet_texture = bullet_dark
+
 		var t when t == Type.BigRed or t == Type.Large:
 			barrel_2 = $"%Barrel2"
 			bullet_sample_2 = $"%Bullet2"
 			barrel_sample_2 = $"%BarrelSample2"
+			if type == Type.BigRed:
+				bullet_texture = bullet_red
+			else:
+				bullet_texture = bullet_dark
+				
 		Type.Huge:
 			barrel_2 = $"%Barrel2"
 			bullet_sample_2 = $"%Bullet2"
@@ -127,20 +147,25 @@ func init_tank()->void:
 			barrel_3 = $"%Barrel3"
 			bullet_sample_3 = $"%Bullet3"
 			barrel_sample_3 = $"%BarrelSample3"
+			bullet_texture = bullet_dark
+			
 			
 	barrel_sample.texture = barrel.texture
 		
 
 func _ready() -> void:
-	health = 1
+	#health = 1
 	init_tank()
 	bullet_node = load("res://scenes/bullet.tscn")
 	status = Status.Alive
 
 func shoot(direction:Vector2,pos = ShootPos.First)->void:
+	AudioPlayer.play_sfx(AudioPlayer.SFX.TankShoot)
 	var bullet : Projectile = bullet_node.instantiate()
 	get_tree().root.add_child(bullet)
-	bullet.direction = direction
+	bullet.direction = Vector2.ZERO
+	#bullet.direction = direction
+	bullet.texture = bullet_texture
 	match pos:
 		ShootPos.Third:
 			bullet.global_rotation = bullet_sample_3.global_rotation

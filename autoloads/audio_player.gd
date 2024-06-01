@@ -5,6 +5,7 @@ enum SFX{
 	TankHugeExplosion,
 	TankBigExplosion,
 	TankMedExplosion,
+	TankShoot,
 	TowerNormalExplosion
 }
 
@@ -29,6 +30,7 @@ const tank_normal_explosion = preload("res://assets/audio/sfx/tank/explosion_lar
 const tank_huge_explosion = preload("res://assets/audio/sfx/tank/BigExplosion02.wav")
 const tank_large_explosion = preload("res://assets/audio/sfx/tank/explosion_med_long_tail_01.wav")
 const tank_big_explosion = preload("res://assets/audio/sfx/tank/Explosion 8.wav")
+const tank_shoot = preload("res://assets/audio/sfx/tank/bullet_impact_ice_06.wav")
 const tower_normal_explosion = preload("res://assets/audio/sfx/tower/DeepExplosion02.wav")
 
 var current_music_loop_id : Music
@@ -59,6 +61,8 @@ func play_sfx(id:SFX,looping=false)->bool:
 			stream = tank_huge_explosion
 		SFX.TankMedExplosion:
 			stream = tank_large_explosion
+		SFX.TankShoot:
+			stream = tank_shoot
 		SFX.TowerNormalExplosion:
 			stream = tower_normal_explosion
 		_:

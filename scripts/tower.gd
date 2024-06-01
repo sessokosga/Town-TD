@@ -14,7 +14,7 @@ enum BulletGenre {Bullet, Missile}
 var bullet_node = preload("res://scenes/bullet.tscn")
 var big_missile_node = preload("res://scenes/big_missile.tscn")
 var double_missile_node = preload("res://scenes/double_missile.tscn")
-
+var bullet_green = preload("res://assets/images/Objects/bulletGreen1.png")
 var tex_open_single_missile = preload("res://assets/images/Objects/towerDefense_tile206.png")
 
 @onready var _range :CollisionShape2D = $"%Range"
@@ -86,6 +86,8 @@ func shoot(direction:Vector2,second_shoot = false)->void:
 	var bullet : Projectile = projectile_node.instantiate()
 	bullet.direction = direction
 	add_child(bullet)
+	if type == Type.SingleCanon:
+		bullet.texture = bullet_green
 	
 	if type == Type.ClosedDoubleMissile:
 		bullet.show_behind_parent = true

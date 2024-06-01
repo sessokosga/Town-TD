@@ -4,6 +4,9 @@ class_name Projectile
 @onready var hit_area = $"%HitArea"
 
 enum Sender {Tower,Tank}
+var texture :Texture2D:
+	set(t):
+		$Texture.texture = t
 
 @export var damage = 1
 var direction :Vector2
