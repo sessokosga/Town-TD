@@ -1,18 +1,19 @@
-[gd_scene load_steps=17 format=3 uid="uid://dtudpa0qegh5d"]
+[gd_scene load_steps=18 format=3 uid="uid://bphikoydf0ttw"]
 
-[ext_resource type="Script" path="res://scripts/tank.gd" id="1_w1xgs"]
-[ext_resource type="Texture2D" uid="uid://ckmg2kfih7271" path="res://assets/images/Objects/tankBody_bigRed.png" id="2_m8pdv"]
-[ext_resource type="Texture2D" uid="uid://d35w3srs0xqgg" path="res://assets/images/Objects/specialBarrel1.png" id="3_na4ls"]
-[ext_resource type="Texture2D" uid="uid://bdhge7iwjltkl" path="res://assets/images/Objects/bulletRed1.png" id="4_dobjb"]
-[ext_resource type="Texture2D" uid="uid://bhyhibdnbxb5l" path="res://assets/images/Objects/explosion1.png" id="5_p6yrj"]
-[ext_resource type="Texture2D" uid="uid://cyh2k5wn5cubg" path="res://assets/images/Objects/explosion2.png" id="6_17q0p"]
-[ext_resource type="Texture2D" uid="uid://cseinrinevbwa" path="res://assets/images/Objects/explosion3.png" id="7_6bqnv"]
-[ext_resource type="Texture2D" uid="uid://broqf56td2t7i" path="res://assets/images/Objects/explosion4.png" id="8_ersbe"]
-[ext_resource type="Texture2D" uid="uid://kcbrwpsthqe0" path="res://assets/images/Objects/explosion5.png" id="9_nj4ng"]
+[ext_resource type="Script" path="res://scripts/tank.gd" id="1_2wvh0"]
+[ext_resource type="Texture2D" uid="uid://cdyq04t67gmwr" path="res://assets/images/Objects/tankBody_huge.png" id="2_utf6n"]
+[ext_resource type="Texture2D" uid="uid://d35w3srs0xqgg" path="res://assets/images/Objects/specialBarrel1.png" id="3_1732e"]
+[ext_resource type="Texture2D" uid="uid://bdhge7iwjltkl" path="res://assets/images/Objects/bulletRed1.png" id="4_4jf3y"]
+[ext_resource type="Texture2D" uid="uid://dtb2521hgolj2" path="res://assets/images/Objects/specialBarrel4.png" id="4_l7g60"]
+[ext_resource type="Texture2D" uid="uid://bhyhibdnbxb5l" path="res://assets/images/Objects/explosion1.png" id="5_x0qgq"]
+[ext_resource type="Texture2D" uid="uid://cyh2k5wn5cubg" path="res://assets/images/Objects/explosion2.png" id="6_57w40"]
+[ext_resource type="Texture2D" uid="uid://cseinrinevbwa" path="res://assets/images/Objects/explosion3.png" id="7_dajwe"]
+[ext_resource type="Texture2D" uid="uid://broqf56td2t7i" path="res://assets/images/Objects/explosion4.png" id="8_58y7v"]
+[ext_resource type="Texture2D" uid="uid://kcbrwpsthqe0" path="res://assets/images/Objects/explosion5.png" id="9_f8lsi"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_555gt"]
 resource_local_to_scene = true
-size = Vector2(70, 60)
+size = Vector2(94, 96)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6imrt"]
 resource_local_to_scene = true
@@ -97,19 +98,19 @@ _data = {
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("5_p6yrj")
+"texture": ExtResource("5_x0qgq")
 }, {
 "duration": 1.0,
-"texture": ExtResource("6_17q0p")
+"texture": ExtResource("6_57w40")
 }, {
 "duration": 1.0,
-"texture": ExtResource("7_6bqnv")
+"texture": ExtResource("7_dajwe")
 }, {
 "duration": 1.0,
-"texture": ExtResource("8_ersbe")
+"texture": ExtResource("8_58y7v")
 }, {
 "duration": 1.0,
-"texture": ExtResource("9_nj4ng")
+"texture": ExtResource("9_f8lsi")
 }],
 "loop": false,
 "name": &"explosion",
@@ -117,65 +118,94 @@ animations = [{
 }]
 
 [node name="Tank" type="CharacterBody2D" groups=["tank"]]
-script = ExtResource("1_w1xgs")
+script = ExtResource("1_2wvh0")
 initial_body_rotation = 90
 initial_barrel_rotation = 90
-type = 5
-health = 20
+type = 6
+speed = 100.0
+health = 40
 
 [node name="Body" type="Sprite2D" parent="."]
 unique_name_in_owner = true
 rotation = 1.5708
 scale = Vector2(0.941176, 0.941177)
-texture = ExtResource("2_m8pdv")
+texture = ExtResource("2_utf6n")
 
 [node name="BarrelSample" type="Sprite2D" parent="Body"]
 unique_name_in_owner = true
-visible = false
-position = Vector2(14.7926, -4.53317)
+position = Vector2(0.98024, 23.0919)
 scale = Vector2(0.929688, 0.929687)
-texture = ExtResource("3_na4ls")
+texture = ExtResource("3_1732e")
 
 [node name="BarrelSample2" type="Sprite2D" parent="Body"]
 unique_name_in_owner = true
-visible = false
-position = Vector2(-14.1936, -5.23661)
+position = Vector2(-14.1938, -43.4866)
 scale = Vector2(0.929688, 0.929687)
-texture = ExtResource("3_na4ls")
+texture = ExtResource("4_l7g60")
+flip_v = true
+
+[node name="BarrelSample3" type="Sprite2D" parent="Body"]
+unique_name_in_owner = true
+position = Vector2(10.2437, -43.4867)
+scale = Vector2(0.929688, 0.929687)
+texture = ExtResource("4_l7g60")
+flip_h = true
+flip_v = true
 
 [node name="Barrel" type="Sprite2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(4.26647, 13.9225)
+position = Vector2(-14.0645, -10.7087)
 rotation = 1.5708
 scale = Vector2(0.875, 0.875)
-texture = ExtResource("3_na4ls")
+texture = ExtResource("3_1732e")
+centered = false
+offset = Vector2(-0.421518, -12.9497)
 
 [node name="Bullet" type="Sprite2D" parent="Barrel"]
 unique_name_in_owner = true
 visible = false
-position = Vector2(-0.647224, -54.6133)
+position = Vector2(-4.07578, -47.7561)
 scale = Vector2(1.14286, 1.14286)
-texture = ExtResource("4_dobjb")
+texture = ExtResource("4_4jf3y")
 centered = false
 
 [node name="Barrel2" type="Sprite2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(4.92863, -13.3587)
+position = Vector2(21.9976, -13.8925)
 rotation = 1.5708
 scale = Vector2(0.875, 0.875)
-texture = ExtResource("3_na4ls")
+texture = ExtResource("4_l7g60")
+offset = Vector2(0.609999, -21.6355)
+flip_v = true
 
 [node name="Bullet2" type="Sprite2D" parent="Barrel2"]
 unique_name_in_owner = true
 visible = false
-position = Vector2(-0.647232, -54.6133)
+position = Vector2(-4.07579, -48.899)
 scale = Vector2(1.14286, 1.14286)
-texture = ExtResource("4_dobjb")
+texture = ExtResource("4_4jf3y")
+
+[node name="Barrel3" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(22.665, 9.46718)
+rotation = 1.5708
+scale = Vector2(0.875, 0.875)
+texture = ExtResource("4_l7g60")
+offset = Vector2(0.198914, -20.8727)
+flip_h = true
+flip_v = true
+
+[node name="Bullet3" type="Sprite2D" parent="Barrel3"]
+unique_name_in_owner = true
+visible = false
+position = Vector2(3.92423, -48.899)
+scale = Vector2(1.14286, 1.14286)
+texture = ExtResource("4_4jf3y")
 
 [node name="HitArea" type="CollisionShape2D" parent="."]
 unique_name_in_owner = true
 visible = false
-position = Vector2(1, -1)
+position = Vector2(-2, -1)
 shape = SubResource("RectangleShape2D_555gt")
 
 [node name="Range" type="CollisionShape2D" parent="."]

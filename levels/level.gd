@@ -23,6 +23,9 @@ var max_waves = 4
 
 var tank_node = preload("res://scenes/tank.tscn")
 var tank_big_node = preload("res://scenes/tank_big.tscn")
+var tank_huge_node = preload("res://scenes/tank_huge.tscn")
+var tank_large_node = preload("res://scenes/tank_large.tscn")
+
 var spawn_time = 3
 var time:float = 0
 var spawned_tanks = 0
@@ -70,10 +73,14 @@ func _on_tank_out_of_screen(tank:Tank)->void:
 	tanks_on_screen -= 1
 	tank_got_a_way.emit()
 
-func spawn_tank(type:Tank.Type = Tank.Type.BigRed)->void:
+func spawn_tank(type:Tank.Type = Tank.Type.Huge)->void:
 	var tank :Tank
 	if type == Tank.Type.BigRed:
 		tank = tank_big_node.instantiate()
+	elif type == Tank.Type.Huge:
+		tank = tank_huge_node.instantiate()
+	elif type == Tank.Type.Large:
+		tank = tank_large_node.instantiate()
 	else:
 		tank = tank_node.instantiate()
 	tank_parents.add_child(tank)

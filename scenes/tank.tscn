@@ -128,6 +128,15 @@ rotation = 1.5708
 scale = Vector2(0.941176, 0.941177)
 texture = ExtResource("1_hefq8")
 
+[node name="BarrelSample" type="Sprite2D" parent="Body"]
+unique_name_in_owner = true
+position = Vector2(-0.226653, 0.460969)
+scale = Vector2(0.929688, 0.929687)
+texture = ExtResource("2_j41cu")
+centered = false
+offset = Vector2(-7.11976, -51.0238)
+flip_v = true
+
 [node name="Barrel" type="Sprite2D" parent="."]
 unique_name_in_owner = true
 position = Vector2(-0.433853, -0.213322)

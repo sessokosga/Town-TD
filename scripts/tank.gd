@@ -4,6 +4,7 @@ class_name Tank
 enum Status {Alive, Dead}
 enum Type {Green, Red, Dark, Blue, Sand, BigRed, Huge, Large}
 enum ShootMode {Single, Double}
+enum ShootPos {First, Second, Third}
 
 signal arrived(tank)
 signal dead(tank)
@@ -15,8 +16,13 @@ signal out_of_screen(tank)
 @onready var body :Sprite2D = $"%Body"
 @onready var barrel :Sprite2D = $"%Barrel"
 var barrel_2 :Sprite2D 
+var barrel_3 :Sprite2D 
+@onready var barrel_sample :Sprite2D = $"%BarrelSample"
+var barrel_sample_2 :Sprite2D 
+var barrel_sample_3 :Sprite2D 
 @onready var bullet_sample :Sprite2D = $"%Bullet"
 @onready var bullet_sample_2 :Sprite2D
+@onready var bullet_sample_3 :Sprite2D
 @onready var lab_health :Label = $"%Health"
 @onready var animation :AnimationPlayer = $"%AnimationPlayer"
 @onready var animation_sprite :AnimatedSprite2D = $"%AnimationSprite"
@@ -26,7 +32,6 @@ var barrel_2 :Sprite2D
 @export var type : Type :
 	set(v):
 		type = v
-		init_tank()
 
 var body_blue = preload("res://assets/images/Objects/tankBody_blue.png")
 var barrel_blue = preload("res://assets/images/Objects/tankBlue_barrel2.png")
@@ -48,7 +53,6 @@ var paused = false
 
 const OUT_OF_BOUNDS = Vector2(-10000,-10000)
 
-var speed = 300.0
 var direction = Vector2.ZERO
 var roation_speed = 3
 var barrel_rotation_speed = 10
@@ -58,7 +62,8 @@ var target : Vector2 = OUT_OF_BOUNDS :
 		if target == OUT_OF_BOUNDS:
 			out_of_screen.emit(self)
 			queue_free()
-			
+
+@export var speed = 300.0
 @export var health :int:
 	set(v):
 		health = v
@@ -74,10 +79,12 @@ var target : Vector2 = OUT_OF_BOUNDS :
 var enemy :Tower = null
 var shoot_timer = 1
 var timer_shoot :float =0.5
-var timer_shoot_2 :float =0.5
+var timer_shoot_2 :float =1
+var timer_shoot_3 :float =1.5
 var status:Status
 
 func init_tank()->void:
+	lab_health.text = str(health)
 	match type:
 		Type.Blue:
 			body.texture = body_blue
@@ -94,26 +101,40 @@ func init_tank()->void:
 		Type.Dark:
 			body.texture = body_dark
 			barrel.texture = barrel_dark
-		Type.BigRed:
+		var t when t == Type.BigRed or t == Type.Large:
 			barrel_2 = $"%Barrel2"
 			bullet_sample_2 = $"%Bullet2"
+			barrel_sample_2 = $"%BarrelSample2"
+		Type.Huge:
+			barrel_2 = $"%Barrel2"
+			bullet_sample_2 = $"%Bullet2"
+			barrel_sample_2 = $"%BarrelSample2"
+			barrel_3 = $"%Barrel3"
+			bullet_sample_3 = $"%Bullet3"
+			barrel_sample_3 = $"%BarrelSample3"
+			
+	barrel_sample.texture = barrel.texture
 		
 
 func _ready() -> void:
-	health = 10
+	init_tank()
 	bullet_node = load("res://scenes/bullet.tscn")
 	status = Status.Alive
 
-func shoot(direction:Vector2,second = false)->void:
+func shoot(direction:Vector2,pos = ShootPos.First)->void:
 	var bullet : Projectile = bullet_node.instantiate()
 	get_tree().root.add_child(bullet)
 	bullet.direction = direction
-	if second:
-		bullet.global_rotation = bullet_sample_2.global_rotation
-		bullet.global_position = bullet_sample_2.global_position
-	else :
-		bullet.global_rotation = bullet_sample.global_rotation
-		bullet.global_position = bullet_sample.global_position
+	match pos:
+		ShootPos.Third:
+			bullet.global_rotation = bullet_sample_3.global_rotation
+			bullet.global_position = bullet_sample_3.global_position
+		ShootPos.Second:
+			bullet.global_rotation = bullet_sample_2.global_rotation
+			bullet.global_position = bullet_sample_2.global_position
+		ShootPos.First:
+			bullet.global_rotation = bullet_sample.global_rotation
+			bullet.global_position = bullet_sample.global_position
 	bullet.sender = Projectile.Sender.Tank
 
 func _physics_process(delta: float) -> void:
@@ -124,17 +145,26 @@ func _physics_process(delta: float) -> void:
 		if enemy.status == Tower.Status.Alive:
 			timer_shoot -= delta
 			timer_shoot_2 -= delta
+			timer_shoot_3 -= delta
 			if timer_shoot <= 0:
 				timer_shoot = shoot_timer
 				var tg = enemy.hit_area.position+enemy.global_position# - Vector2(0,50)
 				var dir = Vector2(tg - global_position).normalized()
 				shoot(dir)
-			if type == Type.BigRed:
+				
+			if type == Type.BigRed or type == Type.Huge or type == Type.Large :
 				if timer_shoot_2 <= 0:
 					timer_shoot_2 = shoot_timer
 					var tg = enemy.hit_area.position+enemy.global_position# - Vector2(0,50)
 					var dir = Vector2(tg - global_position).normalized()
-					shoot(dir,true)
+					shoot(dir,ShootPos.Second)
+					
+			if type == Type.Huge:
+				if timer_shoot_3 <= 0:
+					timer_shoot_3 = shoot_timer
+					var tg = enemy.hit_area.position+enemy.global_position# - Vector2(0,50)
+					var dir = Vector2(tg - global_position).normalized()
+					shoot(dir,ShootPos.Third)
 			
 		else:
 			enemy = null
@@ -193,10 +223,26 @@ func aim_at_enemy()->void:
 		var direction = (tg-barrel.global_position).normalized()
 		var angle_to = barrel.transform.x.angle_to(direction) + deg_to_rad(initial_barrel_rotation)
 		barrel.rotate( angle_to)
-		if type == Type.BigRed:
+		barrel.show()
+		barrel_sample.hide()
+		barrel.global_position = barrel_sample.global_position
+		
+		if type == Type.BigRed or type == Type.Huge or type == Type.Large:
 			barrel_2.rotate( angle_to)
+			barrel_2.show()
+			barrel_sample_2.hide()
+		
+		if type == Type.Huge:
+			barrel_3.rotate( angle_to)
+			barrel_3.show()
+			barrel_sample_3.hide()
 	else:
-		barrel.rotation = body.rotation 
-		if type == Type.BigRed:
-			barrel_2.rotation = body.rotation 
+		barrel.hide()
+		barrel_sample.show()
+		if type == Type.BigRed or type == Type.Huge or type == Type.Large:
+			barrel_2.hide()
+			barrel_sample_2.show()
+		if type == Type.Huge:
+			barrel_3.hide()
+			barrel_sample_3.show()
 			
