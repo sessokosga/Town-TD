@@ -22,6 +22,7 @@ var max_waves = 4
 @export var reward_wave = [1,4,7,10,20,30,50]
 
 var tank_node = preload("res://scenes/tank.tscn")
+var tank_big_node = preload("res://scenes/tank_big.tscn")
 var spawn_time = 3
 var time:float = 0
 var spawned_tanks = 0
@@ -69,9 +70,14 @@ func _on_tank_out_of_screen(tank:Tank)->void:
 	tanks_on_screen -= 1
 	tank_got_a_way.emit()
 
-func spawn_tank()->void:
-	var tank = tank_node.instantiate()
+func spawn_tank(type:Tank.Type = Tank.Type.BigRed)->void:
+	var tank :Tank
+	if type == Tank.Type.BigRed:
+		tank = tank_big_node.instantiate()
+	else:
+		tank = tank_node.instantiate()
 	tank_parents.add_child(tank)
+	tank.type = type
 	tank.global_position = path.get_child(0).position
 	tank.target = path.get_child(1).position
 	tank.dead.connect(_on_tank_dead)
