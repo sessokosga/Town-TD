@@ -104,6 +104,7 @@ _data = {
 [node name="Tower" type="Area2D" groups=["tower"]]
 script = ExtResource("1_ta844")
 type = 2
+health = 10
 
 [node name="Base" type="Sprite2D" parent="."]
 unique_name_in_owner = true
@@ -117,6 +118,11 @@ scale = Vector2(0.6875, 0.6875)
 texture = ExtResource("3_4ky70")
 
 [node name="Bullet" type="Sprite2D" parent="Tower"]
+unique_name_in_owner = true
+position = Vector2(0, -20.3636)
+texture = ExtResource("4_jy8mv")
+
+[node name="Bullet2" type="Sprite2D" parent="Tower"]
 unique_name_in_owner = true
 position = Vector2(0, -20.3636)
 texture = ExtResource("4_jy8mv")

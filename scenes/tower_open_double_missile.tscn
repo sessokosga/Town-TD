@@ -105,6 +105,7 @@ _data = {
 script = ExtResource("1_wueqa")
 bullet_type = 1
 type = 3
+health = 10
 
 [node name="Base" type="Sprite2D" parent="."]
 unique_name_in_owner = true

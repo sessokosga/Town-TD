@@ -73,7 +73,7 @@ func _on_tank_out_of_screen(tank:Tank)->void:
 	tanks_on_screen -= 1
 	tank_got_a_way.emit()
 
-func spawn_tank(type:Tank.Type = Tank.Type.Huge)->void:
+func spawn_tank(type:Tank.Type = Tank.Type.Large)->void:
 	var tank :Tank
 	if type == Tank.Type.BigRed:
 		tank = tank_big_node.instantiate()

@@ -73,14 +73,29 @@ var target : Vector2 = OUT_OF_BOUNDS :
 		if health <= 0:
 			health = 0
 			status = Status.Dead
+			match type:
+				Type.BigRed:
+					AudioPlayer.play_sfx(AudioPlayer.SFX.TankBigExplosion)
+				Type.Huge:
+					AudioPlayer.play_sfx(AudioPlayer.SFX.TankHugeExplosion)
+				Type.Large:
+					AudioPlayer.play_sfx(AudioPlayer.SFX.TankMedExplosion)
+				_:
+					AudioPlayer.play_sfx(AudioPlayer.SFX.TankNormalExplosion)
+			barrel.hide()
+			if is_instance_valid(barrel_2):
+				barrel_2.hide()
+			if is_instance_valid(barrel_3):
+				barrel_3.hide()
+				
 			animation.play("explosion")
 			animation_sprite.play("explosion")
 		
 var enemy :Tower = null
 var shoot_timer = 1
-var timer_shoot :float =0.5
-var timer_shoot_2 :float =1
-var timer_shoot_3 :float =1.5
+var timer_shoot :float =0.1
+var timer_shoot_2 :float =.6
+var timer_shoot_3 :float =1.1
 var status:Status
 
 func init_tank()->void:
@@ -117,6 +132,7 @@ func init_tank()->void:
 		
 
 func _ready() -> void:
+	health = 1
 	init_tank()
 	bullet_node = load("res://scenes/bullet.tscn")
 	status = Status.Alive

@@ -20,6 +20,7 @@ var tex_open_single_missile = preload("res://assets/images/Objects/towerDefense_
 @onready var _range :CollisionShape2D = $"%Range"
 @onready var hit_area :CollisionShape2D = $"%HitArea"
 @onready var tower:Sprite2D = $"%Tower"
+@onready var base:Sprite2D = $"%Base"
 @onready var bullet_sample :Sprite2D = $"%Bullet"
 @onready var bullet_sample_2 :Sprite2D = $"%Bullet2"
 @onready var lab_health :Label = $"%Health"
@@ -44,7 +45,7 @@ var projectile_node = null
 		if not is_instance_valid(tower):
 			return
 
-var health:int:
+@export var health:int:
 	set(v):
 		health = v
 		if not is_instance_valid(lab_health):
@@ -53,6 +54,9 @@ var health:int:
 		if health <= 0:
 			health = 0
 			status = Status.Dead
+			AudioPlayer.play_sfx(AudioPlayer.SFX.TowerNormalExplosion)
+			tower.hide()
+			base.hide()
 			animated_sprite.play("explosion")
 			animation_player.play("explosion")
 		
@@ -70,7 +74,7 @@ func init_tower()->void:
 			
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	health = 10
+	#health = 10
 	init_tower()
 
 func shoot(direction:Vector2,second_shoot = false)->void:

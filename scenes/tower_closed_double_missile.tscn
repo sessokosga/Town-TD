@@ -106,6 +106,7 @@ script = ExtResource("1_8xkbp")
 bullet_type = 1
 bullet_genre = 1
 type = 4
+health = 10
 
 [node name="Base" type="Sprite2D" parent="."]
 unique_name_in_owner = true
