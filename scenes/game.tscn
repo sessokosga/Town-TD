@@ -48,7 +48,6 @@ cost = 150
 
 [node name="DoubleCanon" parent="PanelContainer/TowerButtons" instance=ExtResource("3_clwx2")]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 texture_normal = ExtResource("4_tgah8")
 type = 1
@@ -56,7 +55,6 @@ cost = 200
 
 [node name="ClosedDoubleMissile" parent="PanelContainer/TowerButtons" instance=ExtResource("3_clwx2")]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 texture_normal = ExtResource("7_4vpol")
 type = 4
@@ -64,7 +62,6 @@ cost = 250
 
 [node name="OpenSingleMissile" parent="PanelContainer/TowerButtons" instance=ExtResource("3_clwx2")]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 texture_normal = ExtResource("5_d5203")
 type = 2
@@ -72,7 +69,6 @@ cost = 300
 
 [node name="OpenDoubleMissile" parent="PanelContainer/TowerButtons" instance=ExtResource("3_clwx2")]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 texture_normal = ExtResource("6_d8ers")
 type = 3

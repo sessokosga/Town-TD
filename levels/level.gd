@@ -44,7 +44,7 @@ var wave : int:
 		if wave_count == next_reward_target:
 			raise_reward.emit()
 			AudioPlayer.play_ui(AudioPlayer.UI.RewardUnlocked)
-			next_reward_target = 4
+			next_reward_target = 1 #4
 			wave_count = 0
 			tank_color +=1
 			if tank_color >= TANK_COLORS.size():

@@ -13,6 +13,11 @@ signal active(reward)
 @export var effect :Effect
 
 var disabled = false
+var removed = false :
+	set(v):
+		removed = v
+		if removed:
+			queue_free()
 
 var selected: bool:
 	set(v):
