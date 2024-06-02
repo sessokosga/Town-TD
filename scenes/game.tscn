@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://b1rdfptba4fe1"]
+[gd_scene load_steps=15 format=3 uid="uid://b1rdfptba4fe1"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_d5yvn"]
 [ext_resource type="PackedScene" uid="uid://b606qsocimnro" path="res://levels/BaseLevel.tscn" id="2_66l3o"]
@@ -7,9 +7,13 @@
 [ext_resource type="Texture2D" uid="uid://cxrx82r4qjfwk" path="res://assets/images/Objects/towerDefense_tile206.png" id="5_d5203"]
 [ext_resource type="Texture2D" uid="uid://kih4c53syojv" path="res://assets/images/Objects/towerDefense_tile205.png" id="6_d8ers"]
 [ext_resource type="Texture2D" uid="uid://bbioa7o0furq7" path="res://assets/images/Objects/towerDefense_tile204.png" id="7_4vpol"]
+[ext_resource type="PackedScene" uid="uid://bxsrgg3gjmurv" path="res://rewards/reward_health.tscn" id="8_xeoue"]
+[ext_resource type="PackedScene" uid="uid://b7mhtrbgiu2tg" path="res://rewards/reward_money.tscn" id="9_floo8"]
 [ext_resource type="PackedScene" uid="uid://bs8yduxhymjxq" path="res://rewards/reward_tower_open_single_missile.tscn" id="10_mpyg5"]
 [ext_resource type="PackedScene" uid="uid://dqyv0hlmr3gwi" path="res://rewards/reward_tower_open_double_missile.tscn" id="10_t63rj"]
 [ext_resource type="PackedScene" uid="uid://cq6avf5v4hi76" path="res://rewards/reward_tower_closed_double_missile.tscn" id="10_v3hib"]
+[ext_resource type="PackedScene" uid="uid://bqvxqneg3sog0" path="res://rewards/reward_place.tscn" id="10_vt1q8"]
+[ext_resource type="PackedScene" uid="uid://ddbbjp533fshq" path="res://rewards/reward_tower_double_canon.tscn" id="12_ww2m5"]
 
 [node name="Game" type="Control"]
 layout_mode = 3
@@ -44,6 +48,7 @@ cost = 150
 
 [node name="DoubleCanon" parent="PanelContainer/TowerButtons" instance=ExtResource("3_clwx2")]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 texture_normal = ExtResource("4_tgah8")
 type = 1
@@ -51,6 +56,7 @@ cost = 200
 
 [node name="ClosedDoubleMissile" parent="PanelContainer/TowerButtons" instance=ExtResource("3_clwx2")]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 texture_normal = ExtResource("7_4vpol")
 type = 4
@@ -58,6 +64,7 @@ cost = 250
 
 [node name="OpenSingleMissile" parent="PanelContainer/TowerButtons" instance=ExtResource("3_clwx2")]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 texture_normal = ExtResource("5_d5203")
 type = 2
@@ -65,6 +72,7 @@ cost = 300
 
 [node name="OpenDoubleMissile" parent="PanelContainer/TowerButtons" instance=ExtResource("3_clwx2")]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 texture_normal = ExtResource("6_d8ers")
 type = 3
@@ -266,7 +274,6 @@ text = "Home"
 
 [node name="Reward" type="Control" parent="CanvasLayer"]
 unique_name_in_owner = true
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -337,13 +344,25 @@ grow_vertical = 2
 theme_override_constants/separation = 40
 alignment = 1
 
-[node name="TowerDoubleCanon2" parent="CanvasLayer/Reward/Control/VBoxContainer/Rewad/RewardsParent" instance=ExtResource("10_mpyg5")]
+[node name="Reward" parent="CanvasLayer/Reward/Control/VBoxContainer/Rewad/RewardsParent" instance=ExtResource("8_xeoue")]
+layout_mode = 2
+
+[node name="Reward2" parent="CanvasLayer/Reward/Control/VBoxContainer/Rewad/RewardsParent" instance=ExtResource("9_floo8")]
+layout_mode = 2
+
+[node name="Reward3" parent="CanvasLayer/Reward/Control/VBoxContainer/Rewad/RewardsParent" instance=ExtResource("10_vt1q8")]
+layout_mode = 2
+
+[node name="TowerDoubleCanon" parent="CanvasLayer/Reward/Control/VBoxContainer/Rewad/RewardsParent" instance=ExtResource("10_v3hib")]
+layout_mode = 2
+
+[node name="TowerDoubleCanon2" parent="CanvasLayer/Reward/Control/VBoxContainer/Rewad/RewardsParent" instance=ExtResource("12_ww2m5")]
 layout_mode = 2
 
 [node name="TowerDoubleCanon3" parent="CanvasLayer/Reward/Control/VBoxContainer/Rewad/RewardsParent" instance=ExtResource("10_t63rj")]
 layout_mode = 2
 
-[node name="TowerDoubleCanon" parent="CanvasLayer/Reward/Control/VBoxContainer/Rewad/RewardsParent" instance=ExtResource("10_v3hib")]
+[node name="TowerDoubleCanon4" parent="CanvasLayer/Reward/Control/VBoxContainer/Rewad/RewardsParent" instance=ExtResource("10_mpyg5")]
 layout_mode = 2
 
 [node name="Space2" type="Control" parent="CanvasLayer/Reward/Control/VBoxContainer"]

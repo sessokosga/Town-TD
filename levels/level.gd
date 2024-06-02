@@ -19,12 +19,13 @@ var max_waves = 4
 @export var tank_increase = 2
 @export var starting_places = 10
 @export var debug = false
-@export var reward_wave = [1,4,7,10,20,30,50]
 
 var tank_node = preload("res://scenes/tank.tscn")
 var tank_big_node = preload("res://scenes/tank_big.tscn")
 var tank_huge_node = preload("res://scenes/tank_huge.tscn")
 var tank_large_node = preload("res://scenes/tank_large.tscn")
+
+const TANK_COLORS = [Tank.Type.Red, Tank.Type.Green, Tank.Type.Dark, Tank.Type.Blue, Tank.Type.Sand]
 
 var spawn_time = 3
 var time:float = 0
@@ -32,18 +33,22 @@ var spawned_tanks = 0
 var tanks_on_screen = 0
 var enabled_places = 0
 var paused = false
-var next_reward_target = 0
+var next_reward_target = 2
+var tank_color = 0
 var wave_count = 0
 var wave : int: 
 	set(v):
 		wave = v
 		if not is_instance_valid(lab_wave):
 			return
-		if wave_count == reward_wave[next_reward_target]:
+		if wave_count == next_reward_target:
 			raise_reward.emit()
 			AudioPlayer.play_ui(AudioPlayer.UI.RewardUnlocked)
-			next_reward_target += 1
+			next_reward_target = 4
 			wave_count = 0
+			tank_color +=1
+			if tank_color >= TANK_COLORS.size():
+				tank_color = 0
 			progress.value = progress.max_value
 		lab_wave.text = str("Wave ",wave)
 		
@@ -51,7 +56,6 @@ var wave : int:
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	wave = 1 
-	next_reward_target = 0
 	for tp:TowerPlace in tower_places.get_children():
 		tp.add_tower.connect(
 			func ():
@@ -109,12 +113,12 @@ func _process(delta: float) -> void:
 	if paused :
 		return
 	
-	progress.value = wave_count * 100 / (reward_wave[next_reward_target])
+	progress.value = wave_count * 100 / next_reward_target
 	time -= delta
 	var tanks_of_the_wave = tanks_per_wave + tank_increase * (wave - 1)
 	if spawned_tanks < tanks_of_the_wave:
 		if time <= 0:
-			spawn_tank()
+			spawn_tank(TANK_COLORS[tank_color])
 			time = spawn_time
 	else:
 		if tanks_on_screen <= 0:

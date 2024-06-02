@@ -12,6 +12,8 @@ signal active(reward)
 
 @export var effect :Effect
 
+var disabled = false
+
 var selected: bool:
 	set(v):
 		selected = v
@@ -31,7 +33,7 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if not selected and is_instance_valid(bg_color) and visible:
+	if not selected and is_instance_valid(bg_color) and visible and not disabled:
 		if get_global_rect().has_point(get_global_mouse_position()):
 			bg_color.color = "d1d1d14e"
 		else:

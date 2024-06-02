@@ -74,7 +74,7 @@ var health : int:
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	status = Status.Playing
-	money = 40000
+	money = 400
 	health = 10
 	for tb:TowerButton in tower_buttons.get_children():
 		tb.toggled_it.connect(_tower_button_toggled)
@@ -87,12 +87,25 @@ func _ready() -> void:
 	
 	for rwd : Reward in rewards_parent.get_children():
 		rwd.active.connect(_on_reward_active)
+		rwd.disabled = true
+		rwd.hide()
+	add_reward(3)
+	
+func add_reward(count):
+	var found = 0
+	while  found < count and rewards_parent.get_child_count() >= count: 
+		var rwd : Reward = rewards_parent.get_children().pick_random()
+		if rwd.disabled:
+			rwd.disabled = false
+			rwd.show()
+			found += 1
 	
 func _on_tank_destroyed(tank:Tank)->void:
 	money += 50
 	
 func _on_raise_reward()->void:
 	status = Status.Reward
+	add_reward(1)
 	
 func _on_reward_active(rwd:Reward)->void:
 	btn_select_reward.disabled = false
@@ -231,7 +244,10 @@ func _on_tower_button_toggled(toggled_on: bool) -> void:
 
 func _apply_reward()->void:
 	AudioPlayer.play_ui(AudioPlayer.UI.Confirm)
-	selected_reward.hide()
+	if selected_reward.effect !=Reward.Effect.AddThousandCoins:
+		selected_reward.hide()
+		selected_reward.disabled = true
+		selected_reward.queue_free()
 	match selected_reward.effect:
 		Reward.Effect.AddTwoTowerPlace:
 			level.add_tower_places(2) 
