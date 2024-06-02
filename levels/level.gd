@@ -16,7 +16,7 @@ signal raise_reward()
 
 var max_waves = 4
 @export var tanks_per_wave = 2
-@export var tank_increase = 2
+@export var tank_increase = 0#2
 @export var starting_places = 10
 @export var debug = false
 
@@ -33,7 +33,8 @@ var spawned_tanks = 0
 var tanks_on_screen = 0
 var enabled_places = 0
 var paused = false
-var next_reward_target = 1
+var is_empty_spot_available = true
+var next_reward_target = 2
 var tank_color = 0
 var wave_count = 0
 var wave : int: 
@@ -44,7 +45,7 @@ var wave : int:
 		if wave_count == next_reward_target:
 			raise_reward.emit()
 			AudioPlayer.play_ui(AudioPlayer.UI.RewardUnlocked)
-			next_reward_target = 1 #4
+			next_reward_target = 4
 			wave_count = 0
 			tank_color +=1
 			if tank_color >= TANK_COLORS.size():
@@ -63,7 +64,8 @@ func _ready() -> void:
 		)
 	# Make random places available
 	enabled_places = 0
-	add_tower_places(starting_places)
+	#add_tower_places(starting_places)
+	add_tower_places(tower_places.get_child_count()-1)
 			
 
 func _on_tank_dead(tank:Tank)->void:
@@ -108,6 +110,8 @@ func _get_next_target(tg:Vector2)->Vector2:
 			return path.get_child(i+1).position
 			
 	return target
+	
+
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -143,3 +147,5 @@ func add_tower_places(num)->void:
 			if tp.disabled:
 				tp.disabled = false
 				enabled_places += 1
+	
+		is_empty_spot_available = enabled_places < tower_places.get_child_count()

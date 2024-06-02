@@ -16,8 +16,8 @@ var disabled = false
 var removed = false :
 	set(v):
 		removed = v
-		if removed:
-			queue_free()
+		#if removed:
+			#queue_free()
 
 var selected: bool:
 	set(v):
@@ -27,6 +27,8 @@ var selected: bool:
 		if selected:
 			AudioPlayer.play_ui(AudioPlayer.UI.Select)
 			bg_color.color = "ffffff80" 
+			if selected:
+				active.emit(self)
 		else:
 			bg_color.color =  "ffffff00"
 
@@ -38,18 +40,20 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if not selected and is_instance_valid(bg_color) and visible and not disabled:
+	if not visible or disabled:
+		return
+		
+	if not selected :
+		if not is_instance_valid(bg_color):
+			return
+			
 		if get_global_rect().has_point(get_global_mouse_position()):
-			bg_color.color = "d1d1d14e"
+			if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+				selected = !selected
+			else:
+				if not selected:
+					bg_color.color = "d1d1d14e"
 		else:
 			bg_color.color = "ffffff00"
-			
+	
 		
-		
-			
-func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("left_click"):
-		if get_global_rect().has_point(get_global_mouse_position()):
-			selected = !selected
-			if selected:
-				active.emit(self)

@@ -30,8 +30,8 @@ var tex_open_single_missile = preload("res://assets/images/Objects/towerDefense_
 var rotation_speed = 3
 var target :Tank = null
 var shoot_timer = 2
-var timer_shoot :float =0.5
-var timer_shoot_2 :float = .5
+var timer_shoot :float =0
+var timer_shoot_2 :float = 0.5
 var status:Status
 var paused = false
 var occupied_place :TowerPlace
@@ -138,7 +138,6 @@ func _process(delta: float) -> void:
 			timer_shoot_2 -= delta
 		if target.status == Tank.Status.Alive:
 			# Aim at tank
-			timer_shoot -= delta
 			var enemy_pos = target.hit_area.position + target.global_position# - Vector2(150,0)
 			var direction = (enemy_pos - global_position).normalized()
 			var angle_to = tower.transform.y.angle_to(-direction)

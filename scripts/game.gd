@@ -78,8 +78,8 @@ var health : int:
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	status = Status.Playing
-	money = 40000
-	health = 100 #10
+	money = 400
+	health = 10
 	for tb:TowerButton in tower_buttons.get_children():
 		tb.toggled_it.connect(_tower_button_toggled)
 		
@@ -87,27 +87,38 @@ func _ready() -> void:
 	level.tank_got_a_way.connect(_on_tank_got_a_way)
 	level.waves_completed.connect(_on_waves_completed)
 	level.raise_reward.connect(_on_raise_reward)
-	level.tank_destroyed.connect(_on_tank_destroyed)
+	level.tank_destroyed.connect(_on_tank_destroyed)	
 	
 	for rwd : Reward in rewards_parent.get_children():
 		rwd.active.connect(_on_reward_active)
+		rwd.hide()
+		rwd.disabled = true
+		
+	
+	add_reward()
+	
+	
+func add_reward():
+	selected_reward = null
+	for rwd : Reward in rewards_parent.get_children():
 		rwd.disabled = true
 		rwd.hide()
-	add_reward(3)
-	
-func add_reward(count):
+		
 	var found = 0
-	while  found < count and rewards_parent.get_child_count() >= count: 
+	var trials = 0
+	while  found < 3 and trials < 100: 
 		var rwd : Reward = rewards_parent.get_children().pick_random()
 		if rwd.disabled and not rwd.removed:
 			rwd.disabled = false
 			rwd.show()
 			found += 1
-	
+		trials += 1
+	#
 func _on_tank_destroyed(tank:Tank)->void:
 	money += 50
 	
 func _on_raise_reward()->void:
+	add_reward()
 	status = Status.Reward
 	
 func _on_reward_active(rwd:Reward)->void:
@@ -254,6 +265,8 @@ func _apply_reward()->void:
 	match selected_reward.effect:
 		Reward.Effect.AddTwoTowerPlace:
 			level.add_tower_places(2) 
+			if not level.is_empty_spot_available:
+				selected_reward.removed = true
 		Reward.Effect.AddTwoHealthPoints:
 			health += 2
 		Reward.Effect.AddThousandCoins:
@@ -286,7 +299,6 @@ func _input(event: InputEvent) -> void:
 
 func _on_select_reward_pressed() -> void:
 	status = Status.Playing
-	add_reward(1)
 	_apply_reward()
 
 
@@ -296,3 +308,11 @@ func _on_resume_pressed() -> void:
 
 func _on_pause_pressed() -> void:
 	status = Status.Pause
+
+
+func _on_home_pressed() -> void:
+	get_tree().change_scene_to_file("res://scenes/home.tscn")
+
+
+func _on_restart_pressed() -> void:
+	get_tree().reload_current_scene()

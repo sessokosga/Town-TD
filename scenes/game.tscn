@@ -32,9 +32,9 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -265.5
-offset_right = 265.5
-offset_bottom = 148.0
+offset_left = -265.0
+offset_right = 266.0
+offset_bottom = 158.0
 grow_horizontal = 2
 
 [node name="TowerButtons" type="HBoxContainer" parent="PanelContainer"]
@@ -119,7 +119,6 @@ vertical_alignment = 1
 
 [node name="Failure" type="Control" parent="CanvasLayer"]
 unique_name_in_owner = true
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -190,12 +189,12 @@ layout_mode = 2
 theme_override_constants/separation = 50
 alignment = 1
 
-[node name="Button" type="Button" parent="CanvasLayer/Failure/Control/VBoxContainer/HBoxContainer"]
+[node name="Restart" type="Button" parent="CanvasLayer/Failure/Control/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(150, 50)
 layout_mode = 2
 text = "Restart"
 
-[node name="Button2" type="Button" parent="CanvasLayer/Failure/Control/VBoxContainer/HBoxContainer"]
+[node name="Home" type="Button" parent="CanvasLayer/Failure/Control/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(150, 50)
 layout_mode = 2
 text = "Home"
@@ -263,12 +262,12 @@ layout_mode = 2
 theme_override_constants/separation = 50
 alignment = 1
 
-[node name="Button" type="Button" parent="CanvasLayer/Victory/Control/VBoxContainer/HBoxContainer"]
+[node name="Restart" type="Button" parent="CanvasLayer/Victory/Control/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(150, 50)
 layout_mode = 2
 text = "Restart"
 
-[node name="Button2" type="Button" parent="CanvasLayer/Victory/Control/VBoxContainer/HBoxContainer"]
+[node name="Home" type="Button" parent="CanvasLayer/Victory/Control/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(150, 50)
 layout_mode = 2
 text = "Home"
@@ -425,12 +424,15 @@ theme_override_constants/separation = 40
 alignment = 1
 
 [node name="Reward" parent="CanvasLayer/Reward/Control/VBoxContainer/Rewad/RewardsParent" instance=ExtResource("8_xeoue")]
+visible = false
 layout_mode = 2
 
 [node name="Reward2" parent="CanvasLayer/Reward/Control/VBoxContainer/Rewad/RewardsParent" instance=ExtResource("9_floo8")]
+visible = false
 layout_mode = 2
 
 [node name="Reward3" parent="CanvasLayer/Reward/Control/VBoxContainer/Rewad/RewardsParent" instance=ExtResource("10_vt1q8")]
+visible = false
 layout_mode = 2
 
 [node name="TowerDoubleCanon" parent="CanvasLayer/Reward/Control/VBoxContainer/Rewad/RewardsParent" instance=ExtResource("10_v3hib")]
@@ -480,6 +482,12 @@ texture_normal = ExtResource("15_qx450")
 ignore_texture_size = true
 stretch_mode = 0
 
+[connection signal="pressed" from="CanvasLayer/Failure/Control/VBoxContainer/HBoxContainer/Restart" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="CanvasLayer/Failure/Control/VBoxContainer/HBoxContainer/Home" to="." method="_on_home_pressed"]
+[connection signal="pressed" from="CanvasLayer/Victory/Control/VBoxContainer/HBoxContainer/Restart" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="CanvasLayer/Victory/Control/VBoxContainer/HBoxContainer/Home" to="." method="_on_home_pressed"]
+[connection signal="pressed" from="CanvasLayer/Pause/Control/VBoxContainer/HBoxContainer/Restart" to="." method="_on_restart_pressed"]
 [connection signal="pressed" from="CanvasLayer/Pause/Control/VBoxContainer/HBoxContainer/Resume" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="CanvasLayer/Pause/Control/VBoxContainer/HBoxContainer/Home" to="." method="_on_home_pressed"]
 [connection signal="pressed" from="CanvasLayer/Reward/Control/VBoxContainer/HBoxContainer/SelectReward" to="." method="_on_select_reward_pressed"]
 [connection signal="pressed" from="CanvasLayer/Pause2/Pause" to="." method="_on_pause_pressed"]
