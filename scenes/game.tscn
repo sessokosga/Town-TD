@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://b1rdfptba4fe1"]
+[gd_scene load_steps=16 format=3 uid="uid://b1rdfptba4fe1"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_d5yvn"]
 [ext_resource type="PackedScene" uid="uid://b606qsocimnro" path="res://levels/BaseLevel.tscn" id="2_66l3o"]
@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://cq6avf5v4hi76" path="res://rewards/reward_tower_closed_double_missile.tscn" id="10_v3hib"]
 [ext_resource type="PackedScene" uid="uid://bqvxqneg3sog0" path="res://rewards/reward_place.tscn" id="10_vt1q8"]
 [ext_resource type="PackedScene" uid="uid://ddbbjp533fshq" path="res://rewards/reward_tower_double_canon.tscn" id="12_ww2m5"]
+[ext_resource type="Texture2D" uid="uid://rm6ckrjn3utb" path="res://assets/images/ui/pause.png" id="15_qx450"]
 
 [node name="Game" type="Control"]
 layout_mode = 3
@@ -48,6 +49,7 @@ cost = 150
 
 [node name="DoubleCanon" parent="PanelContainer/TowerButtons" instance=ExtResource("3_clwx2")]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 texture_normal = ExtResource("4_tgah8")
 type = 1
@@ -55,6 +57,7 @@ cost = 200
 
 [node name="ClosedDoubleMissile" parent="PanelContainer/TowerButtons" instance=ExtResource("3_clwx2")]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 texture_normal = ExtResource("7_4vpol")
 type = 4
@@ -62,6 +65,7 @@ cost = 250
 
 [node name="OpenSingleMissile" parent="PanelContainer/TowerButtons" instance=ExtResource("3_clwx2")]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 texture_normal = ExtResource("5_d5203")
 type = 2
@@ -69,6 +73,7 @@ cost = 300
 
 [node name="OpenDoubleMissile" parent="PanelContainer/TowerButtons" instance=ExtResource("3_clwx2")]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 texture_normal = ExtResource("6_d8ers")
 type = 3
@@ -268,8 +273,87 @@ custom_minimum_size = Vector2(150, 50)
 layout_mode = 2
 text = "Home"
 
+[node name="Pause" type="Control" parent="CanvasLayer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Pause"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.647059)
+
+[node name="Control" type="PanelContainer" parent="CanvasLayer/Pause"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -470.5
+offset_top = -272.5
+offset_right = 470.5
+offset_bottom = 272.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Pause/Control"]
+layout_mode = 2
+
+[node name="Space" type="Control" parent="CanvasLayer/Pause/Control/VBoxContainer"]
+custom_minimum_size = Vector2(400, 50)
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Title" type="Label" parent="CanvasLayer/Pause/Control/VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"HeaderLarge"
+theme_override_font_sizes/font_size = 70
+text = "Pause"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="Space2" type="Control" parent="CanvasLayer/Pause/Control/VBoxContainer"]
+custom_minimum_size = Vector2(400, 150)
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Control" type="Control" parent="CanvasLayer/Pause/Control/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Pause/Control/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 50
+alignment = 1
+
+[node name="Restart" type="Button" parent="CanvasLayer/Pause/Control/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+text = "Restart"
+
+[node name="Resume" type="Button" parent="CanvasLayer/Pause/Control/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+text = "Resume"
+
+[node name="Home" type="Button" parent="CanvasLayer/Pause/Control/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+text = "Home"
+
 [node name="Reward" type="Control" parent="CanvasLayer"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -350,15 +434,19 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="TowerDoubleCanon" parent="CanvasLayer/Reward/Control/VBoxContainer/Rewad/RewardsParent" instance=ExtResource("10_v3hib")]
+visible = false
 layout_mode = 2
 
 [node name="TowerDoubleCanon2" parent="CanvasLayer/Reward/Control/VBoxContainer/Rewad/RewardsParent" instance=ExtResource("12_ww2m5")]
+visible = false
 layout_mode = 2
 
 [node name="TowerDoubleCanon3" parent="CanvasLayer/Reward/Control/VBoxContainer/Rewad/RewardsParent" instance=ExtResource("10_t63rj")]
+visible = false
 layout_mode = 2
 
 [node name="TowerDoubleCanon4" parent="CanvasLayer/Reward/Control/VBoxContainer/Rewad/RewardsParent" instance=ExtResource("10_mpyg5")]
+visible = false
 layout_mode = 2
 
 [node name="Space2" type="Control" parent="CanvasLayer/Reward/Control/VBoxContainer"]
@@ -378,4 +466,20 @@ layout_mode = 2
 disabled = true
 text = "Select"
 
+[node name="Pause2" type="PanelContainer" parent="CanvasLayer"]
+z_index = -1
+offset_left = 125.0
+offset_top = 38.0
+offset_right = 219.0
+offset_bottom = 132.0
+
+[node name="Pause" type="TextureButton" parent="CanvasLayer/Pause2"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture_normal = ExtResource("15_qx450")
+ignore_texture_size = true
+stretch_mode = 0
+
+[connection signal="pressed" from="CanvasLayer/Pause/Control/VBoxContainer/HBoxContainer/Resume" to="." method="_on_resume_pressed"]
 [connection signal="pressed" from="CanvasLayer/Reward/Control/VBoxContainer/HBoxContainer/SelectReward" to="." method="_on_select_reward_pressed"]
+[connection signal="pressed" from="CanvasLayer/Pause2/Pause" to="." method="_on_pause_pressed"]

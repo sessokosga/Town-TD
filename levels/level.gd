@@ -33,7 +33,7 @@ var spawned_tanks = 0
 var tanks_on_screen = 0
 var enabled_places = 0
 var paused = false
-var next_reward_target = 2
+var next_reward_target = 1
 var tank_color = 0
 var wave_count = 0
 var wave : int: 
@@ -97,7 +97,8 @@ func spawn_tank(type:Tank.Type = Tank.Type.Blue)->void:
 	tank.arrived.connect(_on_tank_reached_target)
 	spawned_tanks += 1
 	tanks_on_screen += 1
-	tank.speed += 5 * (wave-1)
+	#tank.speed += 5 * (wave-1)
+	tank.speed += 300
 
 func _get_next_target(tg:Vector2)->Vector2:
 	var target = Tank.OUT_OF_BOUNDS
@@ -142,4 +143,3 @@ func add_tower_places(num)->void:
 			if tp.disabled:
 				tp.disabled = false
 				enabled_places += 1
-

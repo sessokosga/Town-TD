@@ -1,7 +1,7 @@
 extends Control
 class_name Game
 
-enum Status {Failure, Playing, Reward, Victory}
+enum Status {Failure, Playing, Reward, Victory, Pause}
 
 @onready var tower_buttons = $"%TowerButtons"
 @onready var towers_parent = $"%TowerParents"
@@ -12,6 +12,7 @@ enum Status {Failure, Playing, Reward, Victory}
 @onready var lab_money : Label = $"%Money"
 @onready var ctl_victory : Control = $"%Victory"
 @onready var ctl_failure : Control = $"%Failure"
+@onready var ctl_pause : Control = $"%Pause"
 @onready var ctl_reward : Control = $"%Reward"
 @onready var btn_select_reward : Button = $"%SelectReward"
 @onready var tb_single_canon : TowerButton = $"%SingleCanon"
@@ -39,6 +40,7 @@ var status : Status:
 		ctl_failure.hide()
 		ctl_victory.hide()
 		ctl_reward.hide()
+		ctl_pause.hide()
 		pause_status(true)
 		match status:
 			Status.Victory:
@@ -47,6 +49,8 @@ var status : Status:
 				ctl_failure.show()
 			Status.Reward:
 				ctl_reward.show()
+			Status.Pause:
+				ctl_pause.show()
 			Status.Playing:
 				pause_status(false)
 			
@@ -75,7 +79,7 @@ var health : int:
 func _ready() -> void:
 	status = Status.Playing
 	money = 40000
-	health = 10
+	health = 100 #10
 	for tb:TowerButton in tower_buttons.get_children():
 		tb.toggled_it.connect(_tower_button_toggled)
 		
@@ -105,7 +109,6 @@ func _on_tank_destroyed(tank:Tank)->void:
 	
 func _on_raise_reward()->void:
 	status = Status.Reward
-	add_reward(1)
 	
 func _on_reward_active(rwd:Reward)->void:
 	btn_select_reward.disabled = false
@@ -172,6 +175,8 @@ func pause_status(sta)->void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if status == Status.Victory:
+		pass
+	elif status == Status.Pause:
 		pass
 	elif status == Status.Failure:
 		pass
@@ -244,10 +249,8 @@ func _on_tower_button_toggled(toggled_on: bool) -> void:
 
 func _apply_reward()->void:
 	AudioPlayer.play_ui(AudioPlayer.UI.Confirm)
-	if selected_reward.effect != Reward.Effect.AddThousandCoins and selected_reward.effect != Reward.Effect.AddTwoHealthPoints:
-		selected_reward.hide()
-		selected_reward.disabled = true
-		selected_reward.removed = true
+	selected_reward.hide()
+	selected_reward.disabled = true
 	match selected_reward.effect:
 		Reward.Effect.AddTwoTowerPlace:
 			level.add_tower_places(2) 
@@ -259,22 +262,37 @@ func _apply_reward()->void:
 			tb_double_canon.disabled = false
 			tb_double_canon.show()
 			check_tower_purchase_availabity()
+			selected_reward.removed = true
 		Reward.Effect.OpenSingleMissile:
 			tb_open_single_missile.disabled = false
 			tb_open_single_missile.show()
 			check_tower_purchase_availabity()
+			selected_reward.removed = true
 		Reward.Effect.OpenDoubleMissile:
 			tb_open_double_missile.disabled = false
 			tb_open_double_missile.show()
 			check_tower_purchase_availabity()
+			selected_reward.removed = true
 		Reward.Effect.ClosedDoubleMissile:
 			tb_closed_double_missile.disabled = false
 			tb_closed_double_missile.show()
 			check_tower_purchase_availabity()
+			selected_reward.removed = true
 		
-			
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("pause"):
+		status = Status.Pause
 		
 
 func _on_select_reward_pressed() -> void:
 	status = Status.Playing
+	add_reward(1)
 	_apply_reward()
+
+
+func _on_resume_pressed() -> void:
+	status = Status.Playing
+
+
+func _on_pause_pressed() -> void:
+	status = Status.Pause
