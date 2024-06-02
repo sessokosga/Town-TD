@@ -64,8 +64,7 @@ func _ready() -> void:
 		)
 	# Make random places available
 	enabled_places = 0
-	#add_tower_places(starting_places)
-	add_tower_places(tower_places.get_child_count()-1)
+	add_tower_places(starting_places)
 			
 
 func _on_tank_dead(tank:Tank)->void:

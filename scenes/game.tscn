@@ -1,18 +1,23 @@
-[gd_scene load_steps=16 format=3 uid="uid://b1rdfptba4fe1"]
+[gd_scene load_steps=21 format=3 uid="uid://b1rdfptba4fe1"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_d5yvn"]
 [ext_resource type="PackedScene" uid="uid://b606qsocimnro" path="res://levels/BaseLevel.tscn" id="2_66l3o"]
 [ext_resource type="PackedScene" uid="uid://dtv1fsyvvbca7" path="res://ui/tower_button.tscn" id="3_clwx2"]
 [ext_resource type="Texture2D" uid="uid://bxvwh6natbs7o" path="res://assets/images/Objects/towerDefense_tile250.png" id="4_tgah8"]
+[ext_resource type="Texture2D" uid="uid://cwulcr6b8fnfa" path="res://assets/images/Objects/towerDefense_tile249_grayscale.png" id="4_twfby"]
 [ext_resource type="Texture2D" uid="uid://cxrx82r4qjfwk" path="res://assets/images/Objects/towerDefense_tile206.png" id="5_d5203"]
 [ext_resource type="Texture2D" uid="uid://kih4c53syojv" path="res://assets/images/Objects/towerDefense_tile205.png" id="6_d8ers"]
+[ext_resource type="Texture2D" uid="uid://bpn7n1ls306m7" path="res://assets/images/Objects/towerDefense_tile250_grayscale.png" id="6_qaw34"]
 [ext_resource type="Texture2D" uid="uid://bbioa7o0furq7" path="res://assets/images/Objects/towerDefense_tile204.png" id="7_4vpol"]
+[ext_resource type="Texture2D" uid="uid://rjbgdemiojll" path="res://assets/images/Objects/towerDefense_tile204_grayscale.png" id="8_t8dd8"]
 [ext_resource type="PackedScene" uid="uid://bxsrgg3gjmurv" path="res://rewards/reward_health.tscn" id="8_xeoue"]
 [ext_resource type="PackedScene" uid="uid://b7mhtrbgiu2tg" path="res://rewards/reward_money.tscn" id="9_floo8"]
+[ext_resource type="Texture2D" uid="uid://dhrn5j06ltopq" path="res://assets/images/Objects/towerDefense_tile206_grayscale.png" id="10_3badp"]
 [ext_resource type="PackedScene" uid="uid://bs8yduxhymjxq" path="res://rewards/reward_tower_open_single_missile.tscn" id="10_mpyg5"]
 [ext_resource type="PackedScene" uid="uid://dqyv0hlmr3gwi" path="res://rewards/reward_tower_open_double_missile.tscn" id="10_t63rj"]
 [ext_resource type="PackedScene" uid="uid://cq6avf5v4hi76" path="res://rewards/reward_tower_closed_double_missile.tscn" id="10_v3hib"]
 [ext_resource type="PackedScene" uid="uid://bqvxqneg3sog0" path="res://rewards/reward_place.tscn" id="10_vt1q8"]
+[ext_resource type="Texture2D" uid="uid://1vfy8jq22m31" path="res://assets/images/Objects/towerDefense_tile205_grayscale.png" id="12_taj06"]
 [ext_resource type="PackedScene" uid="uid://ddbbjp533fshq" path="res://rewards/reward_tower_double_canon.tscn" id="12_ww2m5"]
 [ext_resource type="Texture2D" uid="uid://rm6ckrjn3utb" path="res://assets/images/ui/pause.png" id="15_qx450"]
 
@@ -45,6 +50,7 @@ theme_override_constants/separation = 20
 [node name="SingleCanon" parent="PanelContainer/TowerButtons" instance=ExtResource("3_clwx2")]
 unique_name_in_owner = true
 layout_mode = 2
+texture_disabled = ExtResource("4_twfby")
 cost = 150
 
 [node name="DoubleCanon" parent="PanelContainer/TowerButtons" instance=ExtResource("3_clwx2")]
@@ -52,6 +58,7 @@ unique_name_in_owner = true
 visible = false
 layout_mode = 2
 texture_normal = ExtResource("4_tgah8")
+texture_disabled = ExtResource("6_qaw34")
 type = 1
 cost = 200
 
@@ -60,6 +67,7 @@ unique_name_in_owner = true
 visible = false
 layout_mode = 2
 texture_normal = ExtResource("7_4vpol")
+texture_disabled = ExtResource("8_t8dd8")
 type = 4
 cost = 250
 
@@ -68,6 +76,7 @@ unique_name_in_owner = true
 visible = false
 layout_mode = 2
 texture_normal = ExtResource("5_d5203")
+texture_disabled = ExtResource("10_3badp")
 type = 2
 cost = 300
 
@@ -76,6 +85,7 @@ unique_name_in_owner = true
 visible = false
 layout_mode = 2
 texture_normal = ExtResource("6_d8ers")
+texture_disabled = ExtResource("12_taj06")
 type = 3
 cost = 350
 
@@ -119,6 +129,7 @@ vertical_alignment = 1
 
 [node name="Failure" type="Control" parent="CanvasLayer"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
