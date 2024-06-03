@@ -109,7 +109,7 @@ func _ready() -> void:
 	
 
 func _on_prepare_wave(wave):
-	lab_wave_info.text = str("Wave ", level.wave ," is comming")
+	lab_wave_info.text = str("Wave ", wave ," is comming")
 	status = Status.WaveInfo
 	
 func _on_wave_started():

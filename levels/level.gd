@@ -153,7 +153,7 @@ func _process(delta: float) -> void:
 		else:
 			if tanks_on_screen <= 0:
 				if not wave_count +1 == next_reward_target:
-					prepare_wave.emit(wave+2)
+					prepare_wave.emit(wave+1)
 					get_tree().create_timer(3).timeout.connect(
 						func():
 							wave_count += 1
