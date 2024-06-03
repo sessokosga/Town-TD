@@ -120,7 +120,7 @@ animations = [{
 script = ExtResource("1_o8n14")
 initial_body_rotation = 90
 initial_barrel_rotation = 90
-health = 10
+health = 5
 
 [node name="Body" type="Sprite2D" parent="."]
 unique_name_in_owner = true

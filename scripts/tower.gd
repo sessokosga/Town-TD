@@ -29,7 +29,7 @@ var tex_open_single_missile = preload("res://assets/images/Objects/towerDefense_
 
 var rotation_speed = 3
 var target :Tank = null
-var shoot_timer = 2
+var shoot_timer = 1
 var timer_shoot :float =0
 var timer_shoot_2 :float = 0.5
 var status:Status

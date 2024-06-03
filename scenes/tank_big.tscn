@@ -121,7 +121,7 @@ script = ExtResource("1_w1xgs")
 initial_body_rotation = 90
 initial_barrel_rotation = 90
 type = 5
-health = 20
+health = 25
 
 [node name="Body" type="Sprite2D" parent="."]
 unique_name_in_owner = true

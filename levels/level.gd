@@ -6,6 +6,8 @@ signal tank_destroyed(tank)
 signal tank_got_a_way()
 signal waves_completed()
 signal raise_reward()
+signal wave_started()
+signal prepare_wave(wave)
 
 
 @onready var tower_places : Control = $"%TowerPlaces"
@@ -16,7 +18,7 @@ signal raise_reward()
 
 var max_waves = 4
 @export var tanks_per_wave = 2
-@export var tank_increase = 0#2
+@export var tank_increase = 2
 @export var starting_places = 10
 @export var debug = false
 
@@ -26,13 +28,18 @@ var tank_huge_node = preload("res://scenes/tank_huge.tscn")
 var tank_large_node = preload("res://scenes/tank_large.tscn")
 
 const TANK_COLORS = [Tank.Type.Red, Tank.Type.Green, Tank.Type.Dark, Tank.Type.Blue, Tank.Type.Sand]
+const BOSS_TYPES = [Tank.Type.BigRed, Tank.Type.Large, Tank.Type.Huge]
 
+var boss_of_type = [0,0,0]
+var boss_type = 0
 var spawn_time = 3
 var time:float = 0
 var spawned_tanks = 0
 var tanks_on_screen = 0
+var boss_count = 0
 var enabled_places = 0
 var paused = false
+var start_wave = false
 var is_empty_spot_available = true
 var next_reward_target = 2
 var tank_color = 0
@@ -47,7 +54,14 @@ var wave : int:
 			AudioPlayer.play_ui(AudioPlayer.UI.RewardUnlocked)
 			next_reward_target = 4
 			wave_count = 0
+			boss_type = 0
+			boss_count += 1
 			tank_color +=1
+			var size = BOSS_TYPES.size()
+			for i in range(boss_count):
+				boss_of_type[i%size] += 1
+			#if i < BOSS_TYPES.size():
+				#boss_of_type
 			if tank_color >= TANK_COLORS.size():
 				tank_color = 0
 			progress.value = progress.max_value
@@ -56,6 +70,8 @@ var wave : int:
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	randomize()
+	start_wave = true
 	wave = 1 
 	for tp:TowerPlace in tower_places.get_children():
 		tp.add_tower.connect(
@@ -89,6 +105,7 @@ func spawn_tank(type:Tank.Type = Tank.Type.Blue)->void:
 		tank = tank_large_node.instantiate()
 	else:
 		tank = tank_node.instantiate()
+		tank.health += type
 	tank_parents.add_child(tank)
 	tank.type = type
 	tank.global_position = path.get_child(0).position
@@ -98,8 +115,7 @@ func spawn_tank(type:Tank.Type = Tank.Type.Blue)->void:
 	tank.arrived.connect(_on_tank_reached_target)
 	spawned_tanks += 1
 	tanks_on_screen += 1
-	#tank.speed += 5 * (wave-1)
-	tank.speed += 300
+	tank.speed += 5 * (wave-1)
 
 func _get_next_target(tg:Vector2)->Vector2:
 	var target = Tank.OUT_OF_BOUNDS
@@ -119,17 +135,42 @@ func _process(delta: float) -> void:
 	
 	progress.value = wave_count * 100 / next_reward_target
 	time -= delta
-	var tanks_of_the_wave = tanks_per_wave + tank_increase * (wave - 1)
-	if spawned_tanks < tanks_of_the_wave:
-		if time <= 0:
-			spawn_tank(TANK_COLORS[tank_color])
-			time = spawn_time
-	else:
-		if tanks_on_screen <= 0:
-			wave_count += 1
-			wave += 1
-			spawned_tanks = 0
-			tanks_on_screen = 0
+	var regular_tanks = tanks_per_wave + tank_increase * (wave - 1)
+	var tanks_of_the_wave = tanks_per_wave + tank_increase * (wave - 1) + boss_count
+	if start_wave:
+		if spawned_tanks < tanks_of_the_wave:
+			if time <= 0:
+				if spawned_tanks < regular_tanks :
+					spawn_tank(TANK_COLORS[tank_color])
+				elif spawned_tanks < tanks_of_the_wave:
+					spawn_tank(BOSS_TYPES[boss_type])
+					boss_of_type[boss_type] -= 1
+					if boss_of_type[boss_type] <= 0:
+						boss_type += 1
+					if boss_type >= BOSS_TYPES.size():
+						boss_type = 0
+				time = spawn_time
+		else:
+			if tanks_on_screen <= 0:
+				if not wave_count +1 == next_reward_target:
+					prepare_wave.emit(wave+2)
+					get_tree().create_timer(3).timeout.connect(
+						func():
+							wave_count += 1
+							wave += 1
+							spawned_tanks = 0
+							tanks_on_screen = 0
+							start_wave = true
+							wave_started.emit()
+					)
+				else :
+					wave_count += 1
+					wave += 1
+					spawned_tanks = 0
+					tanks_on_screen = 0
+					start_wave = true
+				
+			
 
 func toggle_tower_places_visibility(b:bool)->void:
 	for tp:TowerPlace in tower_places.get_children():

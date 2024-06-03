@@ -9,23 +9,21 @@ enum Effect {
 signal active(reward)
 
 @onready var bg_color : ColorRect = $"%BGColor"
-
 @export var effect :Effect
 
 var disabled = false
 var removed = false :
 	set(v):
 		removed = v
-		#if removed:
-			#queue_free()
+		if removed:
+			queue_free()
 
 var selected: bool:
 	set(v):
 		selected = v
 		if not is_instance_valid(bg_color):
 			return
-		if selected:
-			AudioPlayer.play_ui(AudioPlayer.UI.Select)
+		if selected and visible:
 			bg_color.color = "ffffff80" 
 			if selected:
 				active.emit(self)

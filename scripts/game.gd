@@ -1,7 +1,7 @@
 extends Control
 class_name Game
 
-enum Status {Failure, Playing, Reward, Victory, Pause}
+enum Status {Failure, Playing, Reward, Victory, Pause,WaveInfo}
 
 @onready var tower_buttons = $"%TowerButtons"
 @onready var towers_parent = $"%TowerParents"
@@ -10,9 +10,11 @@ enum Status {Failure, Playing, Reward, Victory, Pause}
 @onready var lab_status : Label = $"%Status"
 @onready var lab_health : Label = $"%Health"
 @onready var lab_money : Label = $"%Money"
+@onready var lab_wave_info : Label = $"%Info"
 @onready var ctl_victory : Control = $"%Victory"
 @onready var ctl_failure : Control = $"%Failure"
 @onready var ctl_pause : Control = $"%Pause"
+@onready var ctl_wave_info : Control = $"%WaveInfo"
 @onready var ctl_reward : Control = $"%Reward"
 @onready var btn_select_reward : Button = $"%SelectReward"
 @onready var tb_single_canon : TowerButton = $"%SingleCanon"
@@ -41,6 +43,7 @@ var status : Status:
 		ctl_victory.hide()
 		ctl_reward.hide()
 		ctl_pause.hide()
+		ctl_wave_info.hide()
 		pause_status(true)
 		match status:
 			Status.Victory:
@@ -51,6 +54,8 @@ var status : Status:
 				ctl_reward.show()
 			Status.Pause:
 				ctl_pause.show()
+			Status.WaveInfo:
+				ctl_wave_info.show()
 			Status.Playing:
 				pause_status(false)
 			
@@ -77,9 +82,10 @@ var health : int:
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	randomize()
 	status = Status.Playing
-	money = 400
-	health = 10
+	money = 800
+	health = 20
 	for tb:TowerButton in tower_buttons.get_children():
 		tb.toggled_it.connect(_tower_button_toggled)
 		
@@ -87,7 +93,11 @@ func _ready() -> void:
 	level.tank_got_a_way.connect(_on_tank_got_a_way)
 	level.waves_completed.connect(_on_waves_completed)
 	level.raise_reward.connect(_on_raise_reward)
-	level.tank_destroyed.connect(_on_tank_destroyed)	
+	level.tank_destroyed.connect(_on_tank_destroyed)
+	level.prepare_wave.connect(_on_prepare_wave)
+	level.wave_started.connect(_on_wave_started)
+	
+	
 	
 	for rwd : Reward in rewards_parent.get_children():
 		rwd.active.connect(_on_reward_active)
@@ -97,11 +107,19 @@ func _ready() -> void:
 	
 	add_reward()
 	
+
+func _on_prepare_wave(wave):
+	lab_wave_info.text = str("Wave ", level.wave ," is comming")
+	status = Status.WaveInfo
 	
+func _on_wave_started():
+	status = Status.Playing
+
 func add_reward():
 	selected_reward = null
 	for rwd : Reward in rewards_parent.get_children():
 		rwd.disabled = true
+		rwd.selected = false
 		rwd.hide()
 		
 	var found = 0
@@ -122,8 +140,11 @@ func _on_raise_reward()->void:
 	status = Status.Reward
 	
 func _on_reward_active(rwd:Reward)->void:
+	if status != Status.Reward:
+		return
 	btn_select_reward.disabled = false
 	selected_reward = rwd
+	AudioPlayer.play_ui(AudioPlayer.UI.Select)
 	for rw : Reward in rewards_parent.get_children():
 		if rwd != rw:
 			rw.selected = false

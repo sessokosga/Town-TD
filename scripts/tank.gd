@@ -154,7 +154,6 @@ func init_tank()->void:
 		
 
 func _ready() -> void:
-	#health = 1
 	init_tank()
 	bullet_node = load("res://scenes/bullet.tscn")
 	status = Status.Alive

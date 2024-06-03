@@ -58,6 +58,7 @@ text = "Audio : Soniss.com"
 
 [node name="Home" type="Button" parent="."]
 custom_minimum_size = Vector2(400, 100)
+layout_mode = 0
 offset_left = 753.0
 offset_top = 811.0
 offset_right = 1153.0
@@ -66,6 +67,7 @@ theme_override_font_sizes/font_size = 40
 text = "Home"
 
 [node name="PanelContainer2" type="PanelContainer" parent="."]
+layout_mode = 0
 offset_left = 346.0
 offset_top = 81.0
 offset_right = 1616.0
